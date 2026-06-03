@@ -54,12 +54,14 @@ This task should not include:
 
 ## Acceptance criteria
 
-- [ ] Mock buildings debug layer appears in the Layers list.
-- [ ] Layer visibility can be toggled.
-- [ ] Mock building polygons render on the map when visible.
-- [ ] No avoid-zone logic has been added.
-- [ ] No Overpass code has been added.
-- [ ] App still builds.
+- [x] Mock buildings debug layer appears in the Layers list.
+- [x] Layer visibility can be toggled.
+- [x] Mock building polygons render on the map when visible.
+- [x] No avoid-zone logic has been added.
+- [x] No Overpass code has been added.
+- [x] App still builds.
+
+Completion note: accepted as a completed debug-layer task. Task 013 is the next implementation task.
 
 ## Testing instructions
 

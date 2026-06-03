@@ -127,9 +127,9 @@ Use that file as context, not as a replacement for the active task briefs, archi
 The current next implementation task is:
 
 ```txt
-docs/tasks/012-render-mock-buildings-debug-layer.md
+docs/tasks/013-add-approximate-avoid-zone-layer.md
 ```
 
-Start with Task 012.
+Start with Task 013.
 
-Do not skip ahead to avoid-zone rendering, saved places, Overpass, or later architecture tasks.
+Do not skip ahead to saved places, Overpass, or later architecture tasks.

@@ -246,22 +246,22 @@ If the architecture changes, update the architecture docs.
 
 At the time this document was originally added, the project was still in Phase 0.
 
-That original handover status has been superseded. The repo has since completed Tasks 001 through 011, plus inserted Tasks 8.5, 8.6, and 10.5.
+That original handover status has been superseded. The repo has since completed Tasks 001 through 012, plus inserted Tasks 8.5, 8.6, and 10.5.
 
 The current next implementation task is:
 
 ```txt
-docs/tasks/012-render-mock-buildings-debug-layer.md
+docs/tasks/013-add-approximate-avoid-zone-layer.md
 ```
 
-That task should only render mock building features as a debug layer. It should not add saved places, Overpass, or avoid-zone rendering.
+That task should only add the approximate avoid-zone layer from mock buildings. It should not add saved places or Overpass.
 
 ## Important clarification before implementation
 
 The current next implementation task is:
 
 ```txt
-docs/tasks/012-render-mock-buildings-debug-layer.md
+docs/tasks/013-add-approximate-avoid-zone-layer.md
 ```
 
-The mock buildings debug layer is now the current next task because Task 011 has been completed.
+The approximate avoid-zone layer is now the current next task because Task 012 has been completed.

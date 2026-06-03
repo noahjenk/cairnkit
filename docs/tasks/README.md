@@ -6,11 +6,11 @@ Each task should be treated as a controlled handover unit between the repo docs,
 
 ## Current project status
 
-The repo has completed Tasks 001 through 011, plus inserted Tasks 8.5, 8.6, and 10.5.
+The repo has completed Tasks 001 through 012, plus inserted Tasks 8.5, 8.6, and 10.5.
 
-The current next implementation task is Task 012: `012-render-mock-buildings-debug-layer.md`.
+The current next implementation task is Task 013: `013-add-approximate-avoid-zone-layer.md`.
 
-Copilot must not skip ahead to avoid-zone rendering, saved places, Overpass, or any later tasks before completing the mock buildings debug layer.
+Copilot must not skip ahead to saved places, Overpass, or any later tasks before completing the approximate avoid-zone layer.
 
 ## Task workflow
 
@@ -76,6 +76,7 @@ After those inserted tasks, regular task numbering should continue:
 010.5-[short-task-name].md
 011-[short-task-name].md
 012-[short-task-name].md
+013-[short-task-name].md
 ```
 
 Task numbers should never be reused.
@@ -108,7 +109,7 @@ After the initial task briefs are complete, the next expected tasks should conti
 4. Add Rural Area Finder tool shell. Done.
 5. Relocate status indicator away from bottom-right map controls. Done.
 6. Persist Rural Area Finder radius. Done.
-7. Render mock building features as a debug layer.
+7. Render mock building features as a debug layer. Done.
 8. Add approximate avoid-zone layer from mock buildings.
 9. Add saved-place types and service.
 10. Add map click temporary pin and save-place flow.
@@ -135,7 +136,7 @@ It should first produce a proposed next task brief and explain why that task is 
 The current next implementation task is:
 
 ```txt
-012-render-mock-buildings-debug-layer.md
+013-add-approximate-avoid-zone-layer.md
 ```
 
-Copilot must start with Task 012 and keep it focused on rendering mock building features as a debug layer only.
+Copilot must start with Task 013 and keep it focused on the approximate avoid-zone layer only.

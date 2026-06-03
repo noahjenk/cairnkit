@@ -83,14 +83,14 @@ If the next step is unclear, Copilot should ask for a decision instead of coding
 
 ## Current starting point
 
-The initial implementation sequence has completed Tasks 001 through 011, plus inserted Tasks 8.5, 8.6, and 10.5.
+The initial implementation sequence has completed Tasks 001 through 012, plus inserted Tasks 8.5, 8.6, and 10.5.
 
 The current next task is:
 
 ```txt
-docs/tasks/012-render-mock-buildings-debug-layer.md
+docs/tasks/013-add-approximate-avoid-zone-layer.md
 ```
 
-Copilot must start with Task 012.
+Copilot must start with Task 013.
 
 The later task sequence applies from this point forward, one task at a time.
