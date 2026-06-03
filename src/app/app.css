@@ -221,7 +221,8 @@
   position: absolute;
   right: 20px;
   top: 20px;
-  display: inline-flex;
+  max-width: min(420px, calc(100% - 380px));
+  display: flex;
   align-items: center;
   gap: 8px;
   padding: 10px 12px;
@@ -233,11 +234,23 @@
   font-size: 0.875rem;
 }
 
+.status-indicator span:last-of-type {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .status-indicator__dot {
+  flex: 0 0 auto;
   width: 9px;
   height: 9px;
   border-radius: 999px;
   background: #2f855a;
+}
+
+.status-indicator__refresh {
+  flex: 0 0 auto;
 }
 
 @media (max-width: 760px) {
@@ -268,5 +281,6 @@
     right: auto;
     top: auto;
     bottom: 16px;
+    max-width: calc(100% - 32px);
   }
 }

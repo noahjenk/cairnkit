@@ -18,6 +18,7 @@ export type BuildingLoadStatus =
     }
   | {
       featureCount: number;
+      source: 'cache' | 'network' | 'refresh';
       state: 'success';
     }
   | {
@@ -27,15 +28,23 @@ export type BuildingLoadStatus =
 
 function getBuildingLoadStatusMessage(status: BuildingLoadStatus) {
   if (status.state === 'loading') {
-    return 'Loading buildings';
+    return 'Loading building data';
   }
 
   if (status.state === 'success') {
+    if (status.source === 'cache') {
+      return `${status.featureCount} buildings from cache`;
+    }
+
+    if (status.source === 'refresh') {
+      return `Refreshed ${status.featureCount} buildings`;
+    }
+
     return `${status.featureCount} buildings loaded`;
   }
 
   if (status.state === 'error') {
-    return 'Building load failed';
+    return `Building load failed: ${status.message}`;
   }
 
   return 'Ready';
@@ -45,6 +54,7 @@ export function AppShell() {
   const [temporaryPinCoordinates, setTemporaryPinCoordinates] = useState<SavedPlaceCoordinates | null>(null);
   const [savedPlaces, setSavedPlaces] = useState<SavedPlace[]>(listSavedPlaces);
   const [buildingLoadStatus, setBuildingLoadStatus] = useState<BuildingLoadStatus>({ state: 'idle' });
+  const [buildingRefreshToken, setBuildingRefreshToken] = useState(0);
 
   const handleBuildingLoadStatusChange = useCallback((status: BuildingLoadStatus) => {
     setBuildingLoadStatus(status);
@@ -67,6 +77,7 @@ export function AppShell() {
 
           <section className="map-workspace" aria-label="CairnKit map workspace">
             <MapView
+              buildingRefreshToken={buildingRefreshToken}
               onBuildingLoadStatusChange={handleBuildingLoadStatusChange}
               onMapClick={setTemporaryPinCoordinates}
               savedPlaces={savedPlaces}
@@ -80,7 +91,11 @@ export function AppShell() {
               onClearTemporaryPin={() => setTemporaryPinCoordinates(null)}
               savedPlaces={savedPlaces}
             />
-            <StatusIndicator message={getBuildingLoadStatusMessage(buildingLoadStatus)} />
+            <StatusIndicator
+              isLoading={buildingLoadStatus.state === 'loading'}
+              message={getBuildingLoadStatusMessage(buildingLoadStatus)}
+              onRefresh={() => setBuildingRefreshToken((currentToken) => currentToken + 1)}
+            />
           </section>
         </main>
       </LayerProvider>

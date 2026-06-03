@@ -29,6 +29,7 @@ const temporaryPinMapLayerId = getMapLibreLayerId(TEMPORARY_PIN_LAYER_ID);
 const temporaryPinMapSourceId = getMapLibreSourceId(TEMPORARY_PIN_LAYER_ID);
 
 type UseMapInstanceOptions = {
+  buildingRefreshToken: number;
   onBuildingLoadStatusChange: (status: BuildingLoadStatus) => void;
   onMapClick: (coordinates: SavedPlaceCoordinates) => void;
   ruralAreaFinderRadiusMeters: number;
@@ -207,6 +208,7 @@ function createMarkerElement(className: string, label: string) {
 }
 
 export function useMapInstance({
+  buildingRefreshToken,
   onBuildingLoadStatusChange,
   onMapClick,
   ruralAreaFinderRadiusMeters,
@@ -270,7 +272,7 @@ export function useMapInstance({
       return;
     }
 
-    async function loadBuildingsForCurrentBounds() {
+    async function loadBuildingsForCurrentBounds(forceRefresh = false) {
       if (!mapRef.current) {
         return;
       }
@@ -282,9 +284,10 @@ export function useMapInstance({
 
       buildingLoadRequestIdRef.current = requestId;
 
-      if (cachedFeatures) {
+      if (cachedFeatures && !forceRefresh) {
         onBuildingLoadStatusChange({
           featureCount: cachedFeatures.length,
+          source: 'cache',
           state: 'success'
         });
         return;
@@ -302,6 +305,7 @@ export function useMapInstance({
           buildingFeatureCacheRef.current.set(cacheKey, features);
           onBuildingLoadStatusChange({
             featureCount: features.length,
+            source: 'network',
             state: 'success'
           });
         }
@@ -318,11 +322,11 @@ export function useMapInstance({
     const debouncedLoadBuildings = debounce(loadBuildingsForCurrentBounds, 800);
 
     function handleMoveEnd() {
-      debouncedLoadBuildings();
+      debouncedLoadBuildings(false);
     }
 
     function handleInitialLoad() {
-      debouncedLoadBuildings();
+      debouncedLoadBuildings(false);
     }
 
     map.on('moveend', handleMoveEnd);
@@ -339,6 +343,60 @@ export function useMapInstance({
       map.off('load', handleInitialLoad);
     };
   }, [onBuildingLoadStatusChange]);
+
+  useEffect(() => {
+    const map = mapRef.current;
+
+    if (!map || buildingRefreshToken === 0) {
+      return;
+    }
+
+    const currentMap = map;
+
+    function refreshBuildingsForCurrentBounds() {
+      const requestId = buildingLoadRequestIdRef.current + 1;
+      const bounds = getMapBounds(currentMap);
+      const cacheKey = createBoundsCacheKey(bounds);
+
+      buildingLoadRequestIdRef.current = requestId;
+      onBuildingLoadStatusChange({ state: 'loading' });
+
+      void overpassBuildingSource
+        .loadFeatures({
+          bounds,
+          featureTypeId: buildingFeatureType.id
+        })
+        .then((features) => {
+          if (buildingLoadRequestIdRef.current === requestId) {
+            buildingFeatureCacheRef.current.set(cacheKey, features);
+            onBuildingLoadStatusChange({
+              featureCount: features.length,
+              source: 'refresh',
+              state: 'success'
+            });
+          }
+        })
+        .catch((error) => {
+          if (buildingLoadRequestIdRef.current === requestId) {
+            onBuildingLoadStatusChange({
+              message: error instanceof Error ? error.message : 'Unknown building refresh error.',
+              state: 'error'
+            });
+          }
+        });
+    }
+
+    if (currentMap.loaded()) {
+      refreshBuildingsForCurrentBounds();
+      return;
+    }
+
+    currentMap.once('load', refreshBuildingsForCurrentBounds);
+
+    return () => {
+      currentMap.off('load', refreshBuildingsForCurrentBounds);
+    };
+  }, [buildingRefreshToken, onBuildingLoadStatusChange]);
 
   useEffect(() => {
     const map = mapRef.current;

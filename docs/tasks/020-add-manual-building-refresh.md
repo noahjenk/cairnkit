@@ -51,11 +51,13 @@ This task should not include:
 
 ## Acceptance criteria
 
-- [ ] Manual refresh control exists.
-- [ ] Manual refresh loads building features for current bounds.
-- [ ] Manual refresh can update cached data.
-- [ ] Debounced movement loading still works.
-- [ ] App still builds.
+- [x] Manual refresh control exists.
+- [x] Manual refresh loads building features for current bounds.
+- [x] Manual refresh can update cached data.
+- [x] Debounced movement loading still works.
+- [x] App still builds.
+
+Completion note: accepted as a completed manual building refresh task. Task 021 is the next implementation task.
 
 ## Testing instructions
 

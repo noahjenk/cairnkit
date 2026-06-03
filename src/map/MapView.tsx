@@ -10,6 +10,7 @@ import type { SavedPlace, SavedPlaceCoordinates } from '../savedPlaces';
 import { useMapInstance } from './useMapInstance';
 
 type MapViewProps = {
+  buildingRefreshToken: number;
   onBuildingLoadStatusChange: (status: BuildingLoadStatus) => void;
   onMapClick: (coordinates: SavedPlaceCoordinates) => void;
   savedPlaces: SavedPlace[];
@@ -17,6 +18,7 @@ type MapViewProps = {
 };
 
 export function MapView({
+  buildingRefreshToken,
   onBuildingLoadStatusChange,
   onMapClick,
   savedPlaces,
@@ -40,6 +42,7 @@ export function MapView({
   }, []);
 
   const mapContainerRef = useMapInstance({
+    buildingRefreshToken,
     ruralAreaFinderRadiusMeters,
     onBuildingLoadStatusChange,
     onMapClick,

@@ -22,11 +22,11 @@ Those files should only be updated when their durable guidance changes, not afte
 
 ## Current Project Status
 
-The repo has completed Tasks 001 through 019, plus inserted Tasks 8.5, 8.6, and 10.5.
+The repo has completed Tasks 001 through 021, plus inserted Tasks 8.5, 8.6, and 10.5.
 
-The current next implementation task is Task 020: `020-add-manual-building-refresh.md`.
+The current next implementation task is Task 022: `022-improve-avoid-zone-geometry.md`.
 
-Copilot must not skip ahead to richer status/error states or any later tasks before adding manual building refresh.
+Copilot must not skip ahead to docs refinement or any later tasks before improving avoid-zone geometry.
 
 ## Update Rules
 
@@ -113,6 +113,8 @@ After those inserted tasks, regular task numbering should continue:
 018-[short-task-name].md
 019-[short-task-name].md
 020-[short-task-name].md
+021-[short-task-name].md
+022-[short-task-name].md
 ```
 
 Task numbers should never be reused.
@@ -153,8 +155,8 @@ After the initial task briefs are complete, the next expected tasks should conti
 12. Add Overpass adapter. Done.
 13. Add debounced map movement loading. Done.
 14. Add simple cache. Done.
-15. Add manual refresh.
-16. Add status and error states.
+15. Add manual refresh. Done.
+16. Add status and error states. Done.
 17. Improve avoid-zone geometry.
 18. Update docs from real implementation.
 
@@ -173,7 +175,7 @@ It should first produce a proposed next task brief and explain why that task is 
 The current next implementation task is:
 
 ```txt
-020-add-manual-building-refresh.md
+022-improve-avoid-zone-geometry.md
 ```
 
-Copilot must start with Task 020 and keep it focused on manual building refresh only.
+Copilot must start with Task 022 and keep it focused on avoid-zone geometry refinement only.
