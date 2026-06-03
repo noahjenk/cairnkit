@@ -124,12 +124,10 @@ Use that file as context, not as a replacement for the active task briefs, archi
 
 ## Current next implementation task
 
-The current next implementation task is:
+Read the live task ledger for the current next implementation task:
 
 ```txt
-docs/tasks/013-add-approximate-avoid-zone-layer.md
+docs/tasks/README.md
 ```
 
-Start with Task 013.
-
-Do not skip ahead to saved places, Overpass, or later architecture tasks.
+Start with the task named there. Do not skip ahead to later roadmap work.

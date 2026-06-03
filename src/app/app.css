@@ -123,6 +123,28 @@
   font-size: 0.8125rem;
 }
 
+.temporary-pin-card {
+  display: grid;
+  gap: 12px;
+}
+
+.temporary-pin-card h3 {
+  margin: 0 0 4px;
+  color: #102a43;
+  font-size: 0.875rem;
+}
+
+.save-place-form {
+  display: grid;
+  gap: 10px;
+}
+
+.save-place-form__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
 .floating-search {
   position: absolute;
   left: 20px;

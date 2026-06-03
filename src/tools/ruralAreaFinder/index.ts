@@ -6,4 +6,8 @@ export {
   RURAL_AREA_FINDER_RADIUS_STEP_METERS
 } from './ruralAreaFinderDefaults';
 export { ruralAreaFinderTool } from './ruralAreaFinderTool';
-export { loadRuralAreaFinderRadius, saveRuralAreaFinderRadius } from './ruralAreaFinderStorage';
+export {
+  loadRuralAreaFinderRadius,
+  RURAL_AREA_FINDER_RADIUS_CHANGED_EVENT,
+  saveRuralAreaFinderRadius
+} from './ruralAreaFinderStorage';

@@ -5,6 +5,7 @@ import {
 } from './ruralAreaFinderDefaults';
 
 const RURAL_AREA_FINDER_RADIUS_STORAGE_KEY = 'cairnkit:rural-area-finder:radius-meters';
+export const RURAL_AREA_FINDER_RADIUS_CHANGED_EVENT = 'cairnkit:rural-area-finder:radius-changed';
 
 function clampRadius(radiusMeters: number) {
   return Math.min(
@@ -25,5 +26,11 @@ export function loadRuralAreaFinderRadius() {
 }
 
 export function saveRuralAreaFinderRadius(radiusMeters: number) {
-  window.localStorage.setItem(RURAL_AREA_FINDER_RADIUS_STORAGE_KEY, String(clampRadius(radiusMeters)));
+  const nextRadius = clampRadius(radiusMeters);
+  window.localStorage.setItem(RURAL_AREA_FINDER_RADIUS_STORAGE_KEY, String(nextRadius));
+  window.dispatchEvent(
+    new CustomEvent(RURAL_AREA_FINDER_RADIUS_CHANGED_EVENT, {
+      detail: { radiusMeters: nextRadius }
+    })
+  );
 }

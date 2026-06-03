@@ -19,7 +19,7 @@ Includes:
 
 No React, Vite, MapLibre, or src folder should be added during Phase 0.
 
-Current status: Phase 0 is complete.
+Status details are tracked in `docs/tasks/README.md`.
 
 ## Phase 1: App shell and map foundation
 
@@ -34,7 +34,7 @@ Includes:
 5. Test area near Neasham/Darlington.
 6. Status indicator placeholder.
 
-Current status: Phase 1 is complete.
+Status details are tracked in `docs/tasks/README.md`.
 
 ## Phase 2: Architecture foundations
 
@@ -49,9 +49,7 @@ Includes:
 5. Storage adapter types.
 6. Basic shared types.
 
-Current status: Phase 2 is partially complete. Tool, layer, data-source, feature-type, mock building data, Rural Area Finder shell, Rural Area Finder radius, and mock buildings debug-layer foundations exist. Storage adapter types and shared utility types are still planned.
-
-Current next task: Task 013, `013-add-approximate-avoid-zone-layer.md`.
+Status details and the current next task are tracked in `docs/tasks/README.md`.
 
 ## Phase 3: Rural Area Finder MVP
 

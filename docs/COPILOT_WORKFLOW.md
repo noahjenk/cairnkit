@@ -8,6 +8,8 @@ Copilot should act like a careful project assistant, not a feature generator tha
 
 The repo docs are the source of truth.
 
+For task progress, `docs/tasks/README.md` is the live task ledger. Do not duplicate the current next task in this workflow doc.
+
 Before implementing a change, Copilot should read the relevant docs:
 
 - `docs/PRODUCT_BRIEF.md`
@@ -81,16 +83,8 @@ The next task should be chosen from the roadmap and architecture boundaries, not
 
 If the next step is unclear, Copilot should ask for a decision instead of coding.
 
-## Current starting point
+## Current Starting Point
 
-The initial implementation sequence has completed Tasks 001 through 012, plus inserted Tasks 8.5, 8.6, and 10.5.
+Read `docs/tasks/README.md` for the current completed-task summary and next task.
 
-The current next task is:
-
-```txt
-docs/tasks/013-add-approximate-avoid-zone-layer.md
-```
-
-Copilot must start with Task 013.
-
-The later task sequence applies from this point forward, one task at a time.
+The later task sequence applies one task at a time.

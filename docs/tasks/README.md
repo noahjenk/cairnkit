@@ -4,13 +4,42 @@ This folder contains small task briefs that guide implementation.
 
 Each task should be treated as a controlled handover unit between the repo docs, GitHub issues, Copilot, and the codebase.
 
-## Current project status
+## Task Tracking Source Of Truth
 
-The repo has completed Tasks 001 through 012, plus inserted Tasks 8.5, 8.6, and 10.5.
+This file is the live task ledger for CairnKit.
 
-The current next implementation task is Task 013: `013-add-approximate-avoid-zone-layer.md`.
+When task progress changes, update this file and the affected task brief. Other docs should link here for current task status instead of repeating the current task number.
 
-Copilot must not skip ahead to saved places, Overpass, or any later tasks before completing the approximate avoid-zone layer.
+The stable planning docs still matter:
+
+- `docs/ROADMAP.md` describes phase direction.
+- `docs/ARCHITECTURE.md` describes boundaries.
+- `docs/COPILOT_WORKFLOW.md` describes process.
+- `.github/copilot-instructions.md` gives operating rules.
+- `docs/CHATGPT_PROJECT_CONTEXT.md` preserves historical planning context.
+
+Those files should only be updated when their durable guidance changes, not after every task.
+
+## Current Project Status
+
+The repo has completed Tasks 001 through 015, plus inserted Tasks 8.5, 8.6, and 10.5.
+
+The current next implementation task is Task 016: `016-render-saved-pins-and-places-list.md`.
+
+Copilot must not skip ahead to Overpass or any later tasks before rendering saved pins and the places list.
+
+## Update Rules
+
+After completing a task:
+
+1. Mark that task brief's acceptance criteria as complete.
+2. Add a short completion note to that task brief.
+3. Update `Current Project Status` in this file.
+4. Update `Current next task` in this file.
+5. Add the next task brief if it does not already exist.
+6. Update roadmap, architecture, workflow, or instruction docs only if durable guidance changed.
+
+Do not duplicate the current next task in roadmap, workflow, instruction, or historical context docs.
 
 ## Task workflow
 
@@ -77,6 +106,9 @@ After those inserted tasks, regular task numbering should continue:
 011-[short-task-name].md
 012-[short-task-name].md
 013-[short-task-name].md
+014-[short-task-name].md
+015-[short-task-name].md
+016-[short-task-name].md
 ```
 
 Task numbers should never be reused.
@@ -110,16 +142,17 @@ After the initial task briefs are complete, the next expected tasks should conti
 5. Relocate status indicator away from bottom-right map controls. Done.
 6. Persist Rural Area Finder radius. Done.
 7. Render mock building features as a debug layer. Done.
-8. Add approximate avoid-zone layer from mock buildings.
-9. Add saved-place types and service.
-10. Add map click temporary pin and save-place flow.
-11. Add Overpass adapter.
-12. Add debounced map movement loading.
-13. Add simple cache.
-14. Add manual refresh.
-15. Add status and error states.
-16. Improve avoid-zone geometry.
-17. Update docs from real implementation.
+8. Add approximate avoid-zone layer from mock buildings. Done.
+9. Add saved-place types and service. Done.
+10. Add map click temporary pin and save-place flow. Done.
+11. Render saved pins and/or add the All Places list.
+12. Add Overpass adapter.
+13. Add debounced map movement loading.
+14. Add simple cache.
+15. Add manual refresh.
+16. Add status and error states.
+17. Improve avoid-zone geometry.
+18. Update docs from real implementation.
 
 This list is the later implementation sequence now that the initial task briefs are complete.
 
@@ -131,12 +164,12 @@ If Copilot is unsure what to do next, it should not start coding.
 
 It should first produce a proposed next task brief and explain why that task is the next logical step.
 
-## Current next task
+## Current Next Task
 
 The current next implementation task is:
 
 ```txt
-013-add-approximate-avoid-zone-layer.md
+016-render-saved-pins-and-places-list.md
 ```
 
-Copilot must start with Task 013 and keep it focused on the approximate avoid-zone layer only.
+Copilot must start with Task 016 and keep it focused on saved pins and the places list only.

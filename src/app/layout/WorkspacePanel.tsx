@@ -1,15 +1,14 @@
 import { useLayers } from '../../layers';
+import { TemporaryPinCard, type SavedPlaceCoordinates } from '../../savedPlaces';
 import { RuralAreaFinderPanel, ruralAreaFinderTool, useTools } from '../../tools';
 import { Panel, Toggle } from '../../ui';
 
-const sections = [
-  {
-    title: 'Saved Places',
-    summary: 'Saved place controls will appear here.'
-  }
-];
+type WorkspacePanelProps = {
+  temporaryPinCoordinates: SavedPlaceCoordinates | null;
+  onClearTemporaryPin: () => void;
+};
 
-export function WorkspacePanel() {
+export function WorkspacePanel({ temporaryPinCoordinates, onClearTemporaryPin }: WorkspacePanelProps) {
   const { isLayerVisible, layers, toggleLayerVisibility } = useLayers();
   const { isToolEnabled, toggleTool, tools } = useTools();
 
@@ -56,12 +55,18 @@ export function WorkspacePanel() {
           </div>
         </section>
 
-        {sections.map((section) => (
-          <section className="workspace-section" key={section.title}>
-            <h2>{section.title}</h2>
-            <p>{section.summary}</p>
-          </section>
-        ))}
+        <section className="workspace-section">
+          <h2>Saved Places</h2>
+          {temporaryPinCoordinates ? (
+            <TemporaryPinCard
+              coordinates={temporaryPinCoordinates}
+              onCancel={onClearTemporaryPin}
+              onSaved={onClearTemporaryPin}
+            />
+          ) : (
+            <p>Click the map to choose a place to save.</p>
+          )}
+        </section>
       </Panel>
     </aside>
   );

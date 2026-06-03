@@ -246,22 +246,22 @@ If the architecture changes, update the architecture docs.
 
 At the time this document was originally added, the project was still in Phase 0.
 
-That original handover status has been superseded. The repo has since completed Tasks 001 through 012, plus inserted Tasks 8.5, 8.6, and 10.5.
+That original handover status has been superseded.
 
-The current next implementation task is:
+Current task progress now lives in:
 
 ```txt
-docs/tasks/013-add-approximate-avoid-zone-layer.md
+docs/tasks/README.md
 ```
 
-That task should only add the approximate avoid-zone layer from mock buildings. It should not add saved places or Overpass.
+Use this file as historical context, not as the active task ledger.
 
 ## Important clarification before implementation
 
-The current next implementation task is:
+The current next implementation task is tracked in:
 
 ```txt
-docs/tasks/013-add-approximate-avoid-zone-layer.md
+docs/tasks/README.md
 ```
 
-The approximate avoid-zone layer is now the current next task because Task 012 has been completed.
+Do not update this historical context file after every task unless the planning-history explanation itself changes.

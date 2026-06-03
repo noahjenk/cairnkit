@@ -20,10 +20,10 @@ The app can now show mock building features. The next step is to prove Rural Are
 
 This task should include:
 
-- a registered approximate avoid-zone layer
+- an approximate avoid-zone output owned by the Rural Area Finder tool
 - simple approximate geometry around mock building features
 - use of the current Rural Area Finder radius setting
-- layer visibility controlled through the existing Layers panel
+- visibility controlled by the Rural Area Finder tool toggle
 - deliberately rough visual styling
 
 This task should not include:
@@ -45,21 +45,23 @@ This task should not include:
 
 ## Implementation steps
 
-1. Register an approximate avoid-zone layer.
+1. Add an approximate avoid-zone output for Rural Area Finder.
 2. Add a small helper for creating rough buffer polygons from mock buildings.
-3. Render the avoid-zone layer when visible.
+3. Render the avoid-zone layer when Rural Area Finder is enabled.
 4. Use the persisted Rural Area Finder radius setting.
 5. Keep the mock buildings debug layer separate.
 6. Confirm TypeScript builds.
 
 ## Acceptance criteria
 
-- [ ] Approximate avoid-zone layer appears in the Layers list.
-- [ ] Layer visibility can be toggled.
-- [ ] Avoid-zone output renders from mock buildings.
-- [ ] Radius setting affects the approximate output.
-- [ ] No Overpass code has been added.
-- [ ] App still builds.
+- [x] Approximate avoid-zone output is controlled by the Rural Area Finder toggle.
+- [x] The avoid-zone output does not appear in the Layers list.
+- [x] Avoid-zone output renders from mock buildings.
+- [x] Radius setting affects the approximate output.
+- [x] No Overpass code has been added.
+- [x] App still builds.
+
+Completion note: accepted as a completed approximate avoid-zone task. The avoid-zone output is owned by the Rural Area Finder toggle, not the Layers panel. Task 014 is the next implementation task.
 
 ## Testing instructions
 
@@ -69,7 +71,7 @@ Run:
 npm run build
 ```
 
-Then run the app locally, change the Rural Area Finder radius, toggle the avoid-zone layer, and visually confirm the output changes.
+Then run the app locally, change the Rural Area Finder radius, toggle Rural Area Finder, and visually confirm the output changes.
 
 ## Notes for Copilot
 
