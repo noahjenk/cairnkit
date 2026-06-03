@@ -52,11 +52,13 @@ This task should not include:
 
 ## Acceptance criteria
 
-- [ ] Layer types exist.
-- [ ] Layer registry exists.
-- [ ] Workspace panel shows Layers.
-- [ ] Layer visibility can be toggled.
-- [ ] No real map layer rendering is required yet.
+- [x] Layer types exist.
+- [x] Layer registry exists.
+- [x] Workspace panel shows Layers.
+- [x] Layer visibility can be toggled.
+- [x] No real map layer rendering is required yet.
+
+Completion note: accepted as a completed historical task.
 
 ## Testing instructions
 

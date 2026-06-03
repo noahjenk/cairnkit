@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import App from './App';
 import './index.css';
+import './ui/ui.css';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>

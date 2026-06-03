@@ -53,11 +53,13 @@ This task should not include:
 
 ## Acceptance criteria
 
-- [ ] `npm install` works.
-- [ ] `npm run dev` works.
-- [ ] Browser shows a simple CairnKit placeholder.
-- [ ] No MapLibre or app features are added yet.
-- [ ] The change stays inside the task scope.
+- [x] `npm install` works.
+- [x] `npm run dev` works.
+- [x] Browser shows a simple CairnKit placeholder.
+- [x] No MapLibre or app features are added yet.
+- [x] The change stays inside the task scope.
+
+Completion note: accepted as a completed historical task. Later tasks intentionally replaced the initial placeholder and added MapLibre.
 
 ## Testing instructions
 

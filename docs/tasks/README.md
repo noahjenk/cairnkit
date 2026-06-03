@@ -6,11 +6,11 @@ Each task should be treated as a controlled handover unit between the repo docs,
 
 ## Current project status
 
-The repo is currently at the end of Phase 0. The first implementation task is Task 001: `001-create-vite-react-typescript-app.md`.
+The repo has completed Tasks 001 through 008.
 
-Copilot must not skip ahead to mock building data, MapLibre, Rural Area Finder, saved places, Overpass, or any later tasks before completing the earlier numbered tasks in order.
+The current next implementation task is Task 009: `009-add-mock-building-data-source.md`.
 
-The mock building data source is a later task that only comes after the first eight numbered task briefs are complete.
+Copilot must not skip ahead to Rural Area Finder UI, saved places, Overpass, or any later tasks before completing the mock building data source.
 
 ## Task workflow
 
@@ -106,7 +106,7 @@ After the initial task briefs are complete, the next expected tasks should conti
 13. Improve avoid-zone geometry.
 14. Update docs from real implementation.
 
-This list is the later implementation sequence once the initial task briefs are complete. It does not change the current next task, which remains Task 001.
+This list is the later implementation sequence now that the initial task briefs are complete.
 
 This order can change if the repo docs are updated, but Copilot should not skip ahead without approval.
 
@@ -121,11 +121,7 @@ It should first produce a proposed next task brief and explain why that task is 
 The current next implementation task is:
 
 ```txt
-001-create-vite-react-typescript-app.md
+009-add-mock-building-data-source.md
 ```
 
-Copilot must start with Task 001.
-
-The "after the first eight tasks" section only applies after Tasks 001 through 008 have all been implemented and reviewed.
-
-Copilot must not jump directly to mock building data source yet.
+Copilot must start with Task 009 and keep it focused on mock building data only.

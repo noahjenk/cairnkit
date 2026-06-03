@@ -52,11 +52,13 @@ This task should not include:
 
 ## Acceptance criteria
 
-- [ ] Tool types exist.
-- [ ] Tool registry exists.
-- [ ] Workspace panel shows Active Tools.
-- [ ] A placeholder tool can be toggled.
-- [ ] No Rural Area Finder logic has been added yet.
+- [x] Tool types exist.
+- [x] Tool registry exists.
+- [x] Workspace panel shows Active Tools.
+- [x] A placeholder tool can be toggled.
+- [x] No Rural Area Finder logic has been added yet.
+
+Completion note: accepted as a completed historical task.
 
 ## Testing instructions
 

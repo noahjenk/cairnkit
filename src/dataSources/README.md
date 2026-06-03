@@ -1,1 +1,2 @@
-Data-source adapters and mock/overpass subfolders. Mock data will be added in later tasks.
+Data-source adapter types and registry placeholders.
+Mock data and Overpass adapters belong in later tasks.

@@ -56,12 +56,14 @@ This task should not include:
 
 ## Acceptance criteria
 
-- [ ] App opens directly into a MapLibre map.
-- [ ] Map is centred near the test area.
-- [ ] Map can pan and zoom.
-- [ ] App shell controls still appear around or over the map.
-- [ ] No console errors from repeated map initialisation.
-- [ ] No tools or saved-place features have been added yet.
+- [x] App opens directly into a MapLibre map.
+- [x] Map is centred near the test area.
+- [x] Map can pan and zoom.
+- [x] App shell controls still appear around or over the map.
+- [x] No console errors from repeated map initialisation.
+- [x] No tools or saved-place features have been added yet.
+
+Completion note: accepted as a completed historical task. Later tasks intentionally added tool and layer foundations.
 
 ## Testing instructions
 

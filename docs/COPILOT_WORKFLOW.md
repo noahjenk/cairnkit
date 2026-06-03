@@ -83,12 +83,14 @@ If the next step is unclear, Copilot should ask for a decision instead of coding
 
 ## Current starting point
 
-At the start of implementation, the next task is:
+The initial implementation sequence has completed Tasks 001 through 008.
+
+The current next task is:
 
 ```txt
-docs/tasks/001-create-vite-react-typescript-app.md
+docs/tasks/009-add-mock-building-data-source.md
 ```
 
-Copilot must start with Task 001.
+Copilot must start with Task 009.
 
-The later task sequence only applies after the earlier numbered tasks have been completed in order.
+The later task sequence applies from this point forward, one task at a time.

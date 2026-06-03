@@ -52,11 +52,13 @@ This task should not include:
 
 ## Acceptance criteria
 
-- [ ] Data-source adapter type exists.
-- [ ] Feature type type exists.
-- [ ] All buildings is registered as the first feature type.
-- [ ] No Overpass code has been added.
-- [ ] No map rendering has been added.
+- [x] Data-source adapter type exists.
+- [x] Feature type type exists.
+- [x] All buildings is registered as the first feature type.
+- [x] No Overpass code has been added.
+- [x] No map rendering has been added.
+
+Completion note: accepted as a completed historical task.
 
 ## Testing instructions
 

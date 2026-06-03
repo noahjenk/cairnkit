@@ -19,9 +19,7 @@ Includes:
 
 No React, Vite, MapLibre, or src folder should be added during Phase 0.
 
-Current status: the project is at the end of Phase 0. The next implementation task is Task 001: `001-create-vite-react-typescript-app.md`.
-
-Do not begin Phase 1 work until Task 001 is completed and approved.
+Current status: Phase 0 is complete.
 
 ## Phase 1: App shell and map foundation
 
@@ -36,6 +34,8 @@ Includes:
 5. Test area near Neasham/Darlington.
 6. Status indicator placeholder.
 
+Current status: Phase 1 is complete.
+
 ## Phase 2: Architecture foundations
 
 Goal: create tool, layer, data, and storage boundaries before building features deeply.
@@ -48,6 +48,10 @@ Includes:
 4. Feature-type registry.
 5. Storage adapter types.
 6. Basic shared types.
+
+Current status: Phase 2 is partially complete. Tool, layer, data-source, and feature-type foundations exist. Storage adapter types and shared utility types are still planned.
+
+Current next task: Task 009, `009-add-mock-building-data-source.md`.
 
 ## Phase 3: Rural Area Finder MVP
 

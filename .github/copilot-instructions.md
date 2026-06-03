@@ -127,9 +127,9 @@ Use that file as context, not as a replacement for the active task briefs, archi
 The current next implementation task is:
 
 ```txt
-docs/tasks/001-create-vite-react-typescript-app.md
+docs/tasks/009-add-mock-building-data-source.md
 ```
 
-Start with Task 001.
+Start with Task 009.
 
-Do not skip ahead to mock data, MapLibre, Rural Area Finder, saved places, Overpass, or later architecture tasks.
+Do not skip ahead to Rural Area Finder UI, saved places, Overpass, or later architecture tasks.

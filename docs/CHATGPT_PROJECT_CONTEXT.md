@@ -244,28 +244,24 @@ If the architecture changes, update the architecture docs.
 
 ## Current handover status
 
-At the time this document was added, the project is still in Phase 0.
+At the time this document was originally added, the project was still in Phase 0.
 
-No app implementation should exist yet.
+That original handover status has been superseded. The repo has since completed Tasks 001 through 008.
 
-The next implementation task should be:
+The current next implementation task is:
 
 ```txt
-docs/tasks/001-create-vite-react-typescript-app.md
+docs/tasks/009-add-mock-building-data-source.md
 ```
 
-That task should only create the Vite React TypeScript app and show a simple CairnKit placeholder.
-
-It should not add MapLibre, Rural Area Finder, saved places, Overpass, or any other feature yet.
+That task should only add mock building data and its data-source adapter. It should not add Rural Area Finder UI, saved places, Overpass, or avoid-zone rendering.
 
 ## Important clarification before implementation
 
 The current next implementation task is:
 
 ```txt
-docs/tasks/001-create-vite-react-typescript-app.md
+docs/tasks/009-add-mock-building-data-source.md
 ```
 
-The mock building data source is not the current next task.
-
-Mock building data should only be added later, after the earlier numbered task briefs have been completed in order.
+The mock building data source is now the current next task because the earlier numbered task briefs have been completed in order.

@@ -53,11 +53,13 @@ This task should not include:
 
 ## Acceptance criteria
 
-- [ ] Shared UI components exist.
-- [ ] Components are simple and beginner-readable.
-- [ ] Existing app shell still works.
-- [ ] No new feature behaviour has been added.
-- [ ] No external component library has been added.
+- [x] Shared UI components exist.
+- [x] Components are simple and beginner-readable.
+- [x] Existing app shell still works.
+- [x] No new feature behaviour has been added.
+- [x] No external component library has been added.
+
+Completion note: accepted as a completed historical task.
 
 ## Testing instructions
 

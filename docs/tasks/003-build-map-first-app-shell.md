@@ -57,12 +57,14 @@ This task should not include:
 
 ## Acceptance criteria
 
-- [ ] App opens to a full-screen map-style layout.
-- [ ] Top bar shows CairnKit.
-- [ ] Left panel has Active Tools, Layers, and Saved Places headings.
-- [ ] Floating search placeholder exists.
-- [ ] Status indicator placeholder exists.
-- [ ] No MapLibre has been added yet.
+- [x] App opens to a full-screen map-style layout.
+- [x] Top bar shows CairnKit.
+- [x] Left panel has Active Tools, Layers, and Saved Places headings.
+- [x] Floating search placeholder exists.
+- [x] Status indicator placeholder exists.
+- [x] No MapLibre has been added yet.
+
+Completion note: accepted as a completed historical task. Later tasks intentionally replaced the placeholder map area with MapLibre.
 
 ## Testing instructions
 

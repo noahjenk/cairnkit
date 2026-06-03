@@ -55,10 +55,12 @@ This task should not include:
 
 ## Acceptance criteria
 
-- [ ] Folder structure matches the architecture direction.
-- [ ] App still runs.
-- [ ] No large feature code has been added.
-- [ ] No out-of-scope libraries have been added.
+- [x] Folder structure matches the architecture direction.
+- [x] App still runs.
+- [x] No large feature code has been added.
+- [x] No out-of-scope libraries have been added.
+
+Completion note: accepted as a completed historical task. Later tasks filled several of the planned folders with foundation code.
 
 ## Testing instructions
 
