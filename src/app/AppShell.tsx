@@ -3,6 +3,7 @@ import { FloatingSearchBox } from './layout/FloatingSearchBox';
 import { StatusIndicator } from './layout/StatusIndicator';
 import { TopBar } from './layout/TopBar';
 import { WorkspacePanel } from './layout/WorkspacePanel';
+import { MapView } from '../map/MapView';
 
 export function AppShell() {
   return (
@@ -10,13 +11,7 @@ export function AppShell() {
       <TopBar />
 
       <section className="map-workspace" aria-label="CairnKit map workspace">
-        <div className="map-placeholder" aria-label="Map placeholder">
-          <div className="map-placeholder__grid" />
-          <div className="map-placeholder__label">
-            <span>Map placeholder</span>
-            <strong>CairnKit map workspace</strong>
-          </div>
-        </div>
+        <MapView />
 
         <FloatingSearchBox />
         <WorkspacePanel />

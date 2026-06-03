@@ -1,2 +1,2 @@
-// Placeholder index for src/map
-export {};
+export { MapView } from './MapView';
+export { cairnKitMapCenter, cairnKitMapOptions, cairnKitMapStyle } from './mapConfig';

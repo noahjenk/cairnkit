@@ -48,74 +48,11 @@
   overflow: hidden;
 }
 
-.map-placeholder {
+.map-view {
   position: absolute;
   inset: 0;
-  overflow: hidden;
-  background:
-    linear-gradient(90deg, rgb(255 255 255 / 0.22) 1px, transparent 1px),
-    linear-gradient(0deg, rgb(255 255 255 / 0.22) 1px, transparent 1px),
-    linear-gradient(135deg, #d6eadf 0%, #c9d9ec 46%, #e8e1ce 100%);
-  background-size: 56px 56px, 56px 56px, cover;
-}
-
-.map-placeholder::before,
-.map-placeholder::after {
-  content: '';
-  position: absolute;
-  border-radius: 999px;
-  pointer-events: none;
-}
-
-.map-placeholder::before {
-  width: 52vw;
-  height: 52vw;
-  left: 22%;
-  top: 12%;
-  border: 28px solid rgb(255 255 255 / 0.22);
-}
-
-.map-placeholder::after {
-  width: 38vw;
-  height: 28vw;
-  right: -8%;
-  bottom: -6%;
-  border: 20px solid rgb(72 101 129 / 0.12);
-}
-
-.map-placeholder__grid {
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(circle at 28% 32%, rgb(16 42 67 / 0.15) 0 2px, transparent 3px),
-    radial-gradient(circle at 64% 58%, rgb(16 42 67 / 0.13) 0 2px, transparent 3px),
-    radial-gradient(circle at 78% 24%, rgb(16 42 67 / 0.11) 0 2px, transparent 3px);
-}
-
-.map-placeholder__label {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  display: grid;
-  gap: 4px;
-  width: min(320px, calc(100% - 48px));
-  transform: translate(-50%, -50%);
-  padding: 16px 18px;
-  border: 1px solid rgb(255 255 255 / 0.65);
-  border-radius: 8px;
-  background: rgb(255 255 255 / 0.78);
-  box-shadow: 0 18px 36px rgb(15 23 42 / 0.14);
-  text-align: center;
-}
-
-.map-placeholder__label span {
-  color: #52606d;
-  font-size: 0.8125rem;
-}
-
-.map-placeholder__label strong {
-  color: #102a43;
-  font-size: 0.9375rem;
+  min-height: 100%;
+  background: #d9e2ec;
 }
 
 .workspace-panel {
