@@ -19,6 +19,10 @@ Includes:
 
 No React, Vite, MapLibre, or src folder should be added during Phase 0.
 
+Current status: the project is at the end of Phase 0. The next implementation task is Task 001: `001-create-vite-react-typescript-app.md`.
+
+Do not begin Phase 1 work until Task 001 is completed and approved.
+
 ## Phase 1: App shell and map foundation
 
 Goal: open straight into a clean MapLibre map.

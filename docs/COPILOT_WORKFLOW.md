@@ -80,3 +80,15 @@ Instead, Copilot should:
 The next task should be chosen from the roadmap and architecture boundaries, not from guesswork.
 
 If the next step is unclear, Copilot should ask for a decision instead of coding.
+
+## Current starting point
+
+At the start of implementation, the next task is:
+
+```txt
+docs/tasks/001-create-vite-react-typescript-app.md
+```
+
+Copilot must start with Task 001.
+
+The later task sequence only applies after the earlier numbered tasks have been completed in order.

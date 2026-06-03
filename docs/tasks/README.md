@@ -4,6 +4,14 @@ This folder contains small task briefs that guide implementation.
 
 Each task should be treated as a controlled handover unit between the repo docs, GitHub issues, Copilot, and the codebase.
 
+## Current project status
+
+The repo is currently at the end of Phase 0. The first implementation task is Task 001: `001-create-vite-react-typescript-app.md`.
+
+Copilot must not skip ahead to mock building data, MapLibre, Rural Area Finder, saved places, Overpass, or any later tasks before completing the earlier numbered tasks in order.
+
+The mock building data source is a later task that only comes after the first eight numbered task briefs are complete.
+
 ## Task workflow
 
 For each task:
@@ -98,6 +106,8 @@ After the initial task briefs are complete, the next expected tasks should conti
 13. Improve avoid-zone geometry.
 14. Update docs from real implementation.
 
+This list is the later implementation sequence once the initial task briefs are complete. It does not change the current next task, which remains Task 001.
+
 This order can change if the repo docs are updated, but Copilot should not skip ahead without approval.
 
 ## Copilot rule
@@ -105,3 +115,17 @@ This order can change if the repo docs are updated, but Copilot should not skip 
 If Copilot is unsure what to do next, it should not start coding.
 
 It should first produce a proposed next task brief and explain why that task is the next logical step.
+
+## Current next task
+
+The current next implementation task is:
+
+```txt
+001-create-vite-react-typescript-app.md
+```
+
+Copilot must start with Task 001.
+
+The "after the first eight tasks" section only applies after Tasks 001 through 008 have all been implemented and reviewed.
+
+Copilot must not jump directly to mock building data source yet.

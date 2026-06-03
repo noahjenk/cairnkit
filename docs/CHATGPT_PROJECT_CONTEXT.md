@@ -257,3 +257,15 @@ docs/tasks/001-create-vite-react-typescript-app.md
 That task should only create the Vite React TypeScript app and show a simple CairnKit placeholder.
 
 It should not add MapLibre, Rural Area Finder, saved places, Overpass, or any other feature yet.
+
+## Important clarification before implementation
+
+The current next implementation task is:
+
+```txt
+docs/tasks/001-create-vite-react-typescript-app.md
+```
+
+The mock building data source is not the current next task.
+
+Mock building data should only be added later, after the earlier numbered task briefs have been completed in order.

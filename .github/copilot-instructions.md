@@ -121,3 +121,15 @@ The project was planned through a structured ChatGPT process before Copilot hand
 Read `docs/CHATGPT_PROJECT_CONTEXT.md` for background on how the repo docs were created.
 
 Use that file as context, not as a replacement for the active task briefs, architecture docs, roadmap, or decision log.
+
+## Current next implementation task
+
+The current next implementation task is:
+
+```txt
+docs/tasks/001-create-vite-react-typescript-app.md
+```
+
+Start with Task 001.
+
+Do not skip ahead to mock data, MapLibre, Rural Area Finder, saved places, Overpass, or later architecture tasks.
