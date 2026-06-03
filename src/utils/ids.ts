@@ -1,5 +1,5 @@
 export function createId(prefix: string) {
-  if (window.crypto.randomUUID) {
+  if (window.crypto?.randomUUID) {
     return `${prefix}-${window.crypto.randomUUID()}`;
   }
 

@@ -15,7 +15,14 @@ function clampRadius(radiusMeters: number) {
 }
 
 export function loadRuralAreaFinderRadius() {
-  const storedRadius = window.localStorage.getItem(RURAL_AREA_FINDER_RADIUS_STORAGE_KEY);
+  let storedRadius: string | null = null;
+
+  try {
+    storedRadius = window.localStorage.getItem(RURAL_AREA_FINDER_RADIUS_STORAGE_KEY);
+  } catch {
+    return RURAL_AREA_FINDER_DEFAULT_RADIUS_METERS;
+  }
+
   const parsedRadius = storedRadius ? Number(storedRadius) : RURAL_AREA_FINDER_DEFAULT_RADIUS_METERS;
 
   if (!Number.isFinite(parsedRadius)) {
@@ -27,7 +34,13 @@ export function loadRuralAreaFinderRadius() {
 
 export function saveRuralAreaFinderRadius(radiusMeters: number) {
   const nextRadius = clampRadius(radiusMeters);
-  window.localStorage.setItem(RURAL_AREA_FINDER_RADIUS_STORAGE_KEY, String(nextRadius));
+
+  try {
+    window.localStorage.setItem(RURAL_AREA_FINDER_RADIUS_STORAGE_KEY, String(nextRadius));
+  } catch {
+    // Ignore storage failures so the slider remains usable in restricted browser modes.
+  }
+
   window.dispatchEvent(
     new CustomEvent(RURAL_AREA_FINDER_RADIUS_CHANGED_EVENT, {
       detail: { radiusMeters: nextRadius }

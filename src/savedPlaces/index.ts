@@ -1,4 +1,5 @@
 export { SavePlaceForm } from './SavePlaceForm';
+export { SavedPlacesPanel } from './SavedPlacesPanel';
 export {
   createSavedPlace,
   deleteSavedPlace,

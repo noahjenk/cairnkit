@@ -36,6 +36,24 @@
   background: #d9e2ec;
 }
 
+.map-marker {
+  width: 18px;
+  height: 18px;
+  border: 2px solid #ffffff;
+  border-radius: 999px;
+  box-shadow: 0 2px 8px rgb(15 23 42 / 0.28);
+}
+
+.map-marker--temporary {
+  background: #2f855a;
+}
+
+.map-marker--saved {
+  width: 14px;
+  height: 14px;
+  background: #2563eb;
+}
+
 .workspace-panel {
   position: absolute;
   left: 20px;
@@ -143,6 +161,26 @@
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+}
+
+.saved-places-list {
+  display: grid;
+  gap: 8px;
+}
+
+.saved-places-list__item {
+  display: grid;
+  gap: 4px;
+  padding: 10px;
+  border: 1px solid #d9e2ec;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.saved-places-list__item h3 {
+  margin: 0;
+  color: #102a43;
+  font-size: 0.875rem;
 }
 
 .floating-search {

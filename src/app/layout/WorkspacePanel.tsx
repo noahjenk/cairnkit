@@ -1,14 +1,21 @@
 import { useLayers } from '../../layers';
-import { TemporaryPinCard, type SavedPlaceCoordinates } from '../../savedPlaces';
+import { SavedPlacesPanel, TemporaryPinCard, type SavedPlace, type SavedPlaceCoordinates } from '../../savedPlaces';
 import { RuralAreaFinderPanel, ruralAreaFinderTool, useTools } from '../../tools';
 import { Panel, Toggle } from '../../ui';
 
 type WorkspacePanelProps = {
+  onPlaceSaved: () => void;
   temporaryPinCoordinates: SavedPlaceCoordinates | null;
   onClearTemporaryPin: () => void;
+  savedPlaces: SavedPlace[];
 };
 
-export function WorkspacePanel({ temporaryPinCoordinates, onClearTemporaryPin }: WorkspacePanelProps) {
+export function WorkspacePanel({
+  onPlaceSaved,
+  temporaryPinCoordinates,
+  onClearTemporaryPin,
+  savedPlaces
+}: WorkspacePanelProps) {
   const { isLayerVisible, layers, toggleLayerVisibility } = useLayers();
   const { isToolEnabled, toggleTool, tools } = useTools();
 
@@ -61,11 +68,12 @@ export function WorkspacePanel({ temporaryPinCoordinates, onClearTemporaryPin }:
             <TemporaryPinCard
               coordinates={temporaryPinCoordinates}
               onCancel={onClearTemporaryPin}
-              onSaved={onClearTemporaryPin}
+              onSaved={onPlaceSaved}
             />
           ) : (
             <p>Click the map to choose a place to save.</p>
           )}
+          <SavedPlacesPanel savedPlaces={savedPlaces} />
         </section>
       </Panel>
     </aside>

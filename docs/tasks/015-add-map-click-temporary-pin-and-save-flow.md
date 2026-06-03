@@ -21,6 +21,7 @@ The saved-place service now exists. The next step is to connect it to the map wi
 This task should include:
 
 - map click handling for a temporary pin
+- a visible temporary map pin at the clicked coordinate
 - a temporary pin card or simple save form
 - saving name, notes, and clicked coordinates through the saved-place service
 - clearing the temporary pin after save or cancel
@@ -55,13 +56,14 @@ This task should not include:
 ## Acceptance criteria
 
 - [x] Clicking the map creates temporary pin coordinates.
+- [x] Clicking the map displays a temporary pin.
 - [x] Temporary pin coordinates can be saved as a saved place.
 - [x] Saved places use the saved-place service.
 - [x] Temporary pin can be canceled.
 - [x] No saved-place map rendering has been added.
 - [x] App still builds.
 
-Completion note: accepted as a completed temporary pin and save-flow task. Task 016 is the next implementation task.
+Completion note: accepted as a completed temporary pin and save-flow task. The temporary pin is visible on the map and clears after save or cancel. Task 016 is the next implementation task.
 
 ## Testing instructions
 

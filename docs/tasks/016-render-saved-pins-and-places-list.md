@@ -53,11 +53,13 @@ This task should not include:
 
 ## Acceptance criteria
 
-- [ ] Saved places appear in a workspace list.
-- [ ] Saved-place pins render on the map.
-- [ ] Saving a new place refreshes the list or pins.
-- [ ] No Overpass code has been added.
-- [ ] App still builds.
+- [x] Saved places appear in a workspace list.
+- [x] Saved-place pins render on the map.
+- [x] Saving a new place refreshes the list or pins.
+- [x] No Overpass code has been added.
+- [x] App still builds.
+
+Completion note: accepted as a completed saved-place display task. The click flow now also keeps a visible temporary map pin without blanking the app. Task 017 is the next implementation task.
 
 ## Testing instructions
 

@@ -22,11 +22,11 @@ Those files should only be updated when their durable guidance changes, not afte
 
 ## Current Project Status
 
-The repo has completed Tasks 001 through 015, plus inserted Tasks 8.5, 8.6, and 10.5.
+The repo has completed Tasks 001 through 019, plus inserted Tasks 8.5, 8.6, and 10.5.
 
-The current next implementation task is Task 016: `016-render-saved-pins-and-places-list.md`.
+The current next implementation task is Task 020: `020-add-manual-building-refresh.md`.
 
-Copilot must not skip ahead to Overpass or any later tasks before rendering saved pins and the places list.
+Copilot must not skip ahead to richer status/error states or any later tasks before adding manual building refresh.
 
 ## Update Rules
 
@@ -109,6 +109,10 @@ After those inserted tasks, regular task numbering should continue:
 014-[short-task-name].md
 015-[short-task-name].md
 016-[short-task-name].md
+017-[short-task-name].md
+018-[short-task-name].md
+019-[short-task-name].md
+020-[short-task-name].md
 ```
 
 Task numbers should never be reused.
@@ -145,10 +149,10 @@ After the initial task briefs are complete, the next expected tasks should conti
 8. Add approximate avoid-zone layer from mock buildings. Done.
 9. Add saved-place types and service. Done.
 10. Add map click temporary pin and save-place flow. Done.
-11. Render saved pins and/or add the All Places list.
-12. Add Overpass adapter.
-13. Add debounced map movement loading.
-14. Add simple cache.
+11. Render saved pins and/or add the All Places list. Done.
+12. Add Overpass adapter. Done.
+13. Add debounced map movement loading. Done.
+14. Add simple cache. Done.
 15. Add manual refresh.
 16. Add status and error states.
 17. Improve avoid-zone geometry.
@@ -169,7 +173,7 @@ It should first produce a proposed next task brief and explain why that task is 
 The current next implementation task is:
 
 ```txt
-016-render-saved-pins-and-places-list.md
+020-add-manual-building-refresh.md
 ```
 
-Copilot must start with Task 016 and keep it focused on saved pins and the places list only.
+Copilot must start with Task 020 and keep it focused on manual building refresh only.

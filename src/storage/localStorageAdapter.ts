@@ -1,5 +1,11 @@
 export function readJsonFromLocalStorage<T>(key: string, fallbackValue: T): T {
-  const storedValue = window.localStorage.getItem(key);
+  let storedValue: string | null = null;
+
+  try {
+    storedValue = window.localStorage.getItem(key);
+  } catch {
+    return fallbackValue;
+  }
 
   if (!storedValue) {
     return fallbackValue;
@@ -13,5 +19,9 @@ export function readJsonFromLocalStorage<T>(key: string, fallbackValue: T): T {
 }
 
 export function writeJsonToLocalStorage<T>(key: string, value: T) {
-  window.localStorage.setItem(key, JSON.stringify(value));
+  try {
+    window.localStorage.setItem(key, JSON.stringify(value));
+  } catch {
+    // Ignore storage failures so UI flows do not crash in restricted browser modes.
+  }
 }
