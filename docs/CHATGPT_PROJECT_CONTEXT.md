@@ -246,22 +246,22 @@ If the architecture changes, update the architecture docs.
 
 At the time this document was originally added, the project was still in Phase 0.
 
-That original handover status has been superseded. The repo has since completed Tasks 001 through 008.
+That original handover status has been superseded. The repo has since completed Tasks 001 through 009, plus inserted Tasks 8.5 and 8.6.
 
 The current next implementation task is:
 
 ```txt
-docs/tasks/009-add-mock-building-data-source.md
+docs/tasks/010-add-rural-area-finder-tool-shell.md
 ```
 
-That task should only add mock building data and its data-source adapter. It should not add Rural Area Finder UI, saved places, Overpass, or avoid-zone rendering.
+That task should only add the Rural Area Finder tool shell. It should not add radius persistence, layer rendering, saved places, Overpass, or avoid-zone rendering.
 
 ## Important clarification before implementation
 
 The current next implementation task is:
 
 ```txt
-docs/tasks/009-add-mock-building-data-source.md
+docs/tasks/010-add-rural-area-finder-tool-shell.md
 ```
 
-The mock building data source is now the current next task because the earlier numbered task briefs have been completed in order.
+The Rural Area Finder tool shell is now the current next task because Task 009 has been completed.

@@ -53,12 +53,14 @@ This task should not include:
 
 ## Acceptance criteria
 
-- [ ] Mock building data exists.
-- [ ] Mock building data uses the existing `MapFeature` type.
-- [ ] A mock building data-source adapter exists.
-- [ ] The adapter is registered in `dataSourceRegistry`.
-- [ ] No Overpass code has been added.
-- [ ] No Rural Area Finder UI or avoid-zone rendering has been added.
+- [x] Mock building data exists.
+- [x] Mock building data uses the existing `MapFeature` type.
+- [x] A mock building data-source adapter exists.
+- [x] The adapter is registered in `dataSourceRegistry`.
+- [x] No Overpass code has been added.
+- [x] No Rural Area Finder UI or avoid-zone rendering has been added.
+
+Completion note: accepted as a completed data-source task. Task 010 is the next implementation task.
 
 ## Testing instructions
 

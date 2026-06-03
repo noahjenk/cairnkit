@@ -6,40 +6,21 @@
 }
 
 .top-bar {
-  min-height: 64px;
+  min-height: 44px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-  padding: 12px 20px;
+  padding: 8px 20px;
   border-bottom: 1px solid #d9e2ec;
   background: #ffffff;
   box-shadow: 0 1px 3px rgb(15 23 42 / 0.08);
   z-index: 10;
 }
 
-.top-bar__brand {
-  display: grid;
-  gap: 2px;
-}
-
 .top-bar__title {
   margin: 0;
   color: #102a43;
-  font-size: 1.25rem;
+  font-size: 1.125rem;
   font-weight: 700;
-}
-
-.top-bar__tagline {
-  margin: 0;
-  color: #52606d;
-  font-size: 0.875rem;
-}
-
-.top-bar__status {
-  color: #52606d;
-  font-size: 0.875rem;
-  white-space: nowrap;
 }
 
 .map-workspace {
@@ -58,7 +39,7 @@
 .workspace-panel {
   position: absolute;
   left: 20px;
-  top: 84px;
+  top: 76px;
   bottom: 20px;
   width: min(320px, calc(100% - 40px));
   display: grid;
@@ -109,10 +90,9 @@
 
 .floating-search {
   position: absolute;
-  left: 360px;
+  left: 20px;
   top: 20px;
-  width: min(380px, calc(100% - 720px));
-  min-width: 260px;
+  width: min(320px, calc(100% - 40px));
 }
 
 .floating-search .ui-field__label {
@@ -144,7 +124,7 @@
 
 .status-indicator {
   position: absolute;
-  right: 20px;
+  right: 72px;
   bottom: 20px;
   display: inline-flex;
   align-items: center;
@@ -167,13 +147,8 @@
 
 @media (max-width: 760px) {
   .top-bar {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 6px;
-  }
-
-  .top-bar__status {
-    white-space: normal;
+    min-height: 40px;
+    padding: 7px 16px;
   }
 
   .floating-search {
@@ -187,7 +162,7 @@
   .workspace-panel {
     left: 16px;
     right: 16px;
-    top: 76px;
+    top: 72px;
     bottom: auto;
     width: auto;
     max-height: 52vh;

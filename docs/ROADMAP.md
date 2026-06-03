@@ -49,9 +49,9 @@ Includes:
 5. Storage adapter types.
 6. Basic shared types.
 
-Current status: Phase 2 is partially complete. Tool, layer, data-source, and feature-type foundations exist. Storage adapter types and shared utility types are still planned.
+Current status: Phase 2 is partially complete. Tool, layer, data-source, feature-type, and mock building data foundations exist. Storage adapter types and shared utility types are still planned.
 
-Current next task: Task 009, `009-add-mock-building-data-source.md`.
+Current next task: Task 010, `010-add-rural-area-finder-tool-shell.md`.
 
 ## Phase 3: Rural Area Finder MVP
 

@@ -6,11 +6,11 @@ Each task should be treated as a controlled handover unit between the repo docs,
 
 ## Current project status
 
-The repo has completed Tasks 001 through 008.
+The repo has completed Tasks 001 through 009, plus inserted Tasks 8.5 and 8.6.
 
-The current next implementation task is Task 009: `009-add-mock-building-data-source.md`.
+The current next implementation task is Task 010: `010-add-rural-area-finder-tool-shell.md`.
 
-Copilot must not skip ahead to Rural Area Finder UI, saved places, Overpass, or any later tasks before completing the mock building data source.
+Copilot must not skip ahead to radius persistence, layer rendering, saved places, Overpass, or any later tasks before completing the Rural Area Finder tool shell.
 
 ## Task workflow
 
@@ -61,10 +61,18 @@ Task files should use this format:
 003-build-map-first-app-shell.md
 ```
 
-After task `008`, the next generated task should be:
+After task `008`, an inserted task may use this format when a small prerequisite is discovered before Task 009:
+
+```txt
+008.5-[short-task-name].md
+008.6-[short-task-name].md
+```
+
+After those inserted tasks, regular task numbering should continue:
 
 ```txt
 009-[short-task-name].md
+010-[short-task-name].md
 ```
 
 Task numbers should never be reused.
@@ -91,20 +99,22 @@ Add mock building data source
 
 After the initial task briefs are complete, the next expected tasks should continue roughly in this order:
 
-1. Add mock building data source.
-2. Add Rural Area Finder tool shell.
-3. Persist Rural Area Finder radius.
-4. Render mock building features as a debug layer.
-5. Add approximate avoid-zone layer from mock buildings.
-6. Add saved-place types and service.
-7. Add map click temporary pin and save-place flow.
-8. Add Overpass adapter.
-9. Add debounced map movement loading.
-10. Add simple cache.
-11. Add manual refresh.
-12. Add status and error states.
-13. Improve avoid-zone geometry.
-14. Update docs from real implementation.
+1. Complete small UI tweaks inserted as Task 8.5. Done.
+2. Complete bottom-right UI overlap fix inserted as Task 8.6. Done.
+3. Add mock building data source. Done.
+4. Add Rural Area Finder tool shell.
+5. Persist Rural Area Finder radius.
+6. Render mock building features as a debug layer.
+7. Add approximate avoid-zone layer from mock buildings.
+8. Add saved-place types and service.
+9. Add map click temporary pin and save-place flow.
+10. Add Overpass adapter.
+11. Add debounced map movement loading.
+12. Add simple cache.
+13. Add manual refresh.
+14. Add status and error states.
+15. Improve avoid-zone geometry.
+16. Update docs from real implementation.
 
 This list is the later implementation sequence now that the initial task briefs are complete.
 
@@ -121,7 +131,7 @@ It should first produce a proposed next task brief and explain why that task is 
 The current next implementation task is:
 
 ```txt
-009-add-mock-building-data-source.md
+010-add-rural-area-finder-tool-shell.md
 ```
 
-Copilot must start with Task 009 and keep it focused on mock building data only.
+Copilot must start with Task 010 and keep it focused on the Rural Area Finder shell only.

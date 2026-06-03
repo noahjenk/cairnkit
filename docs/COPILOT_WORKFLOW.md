@@ -83,14 +83,14 @@ If the next step is unclear, Copilot should ask for a decision instead of coding
 
 ## Current starting point
 
-The initial implementation sequence has completed Tasks 001 through 008.
+The initial implementation sequence has completed Tasks 001 through 009, plus inserted Tasks 8.5 and 8.6.
 
 The current next task is:
 
 ```txt
-docs/tasks/009-add-mock-building-data-source.md
+docs/tasks/010-add-rural-area-finder-tool-shell.md
 ```
 
-Copilot must start with Task 009.
+Copilot must start with Task 010.
 
 The later task sequence applies from this point forward, one task at a time.

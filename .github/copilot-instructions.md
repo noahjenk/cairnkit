@@ -127,9 +127,9 @@ Use that file as context, not as a replacement for the active task briefs, archi
 The current next implementation task is:
 
 ```txt
-docs/tasks/009-add-mock-building-data-source.md
+docs/tasks/010-add-rural-area-finder-tool-shell.md
 ```
 
-Start with Task 009.
+Start with Task 010.
 
-Do not skip ahead to Rural Area Finder UI, saved places, Overpass, or later architecture tasks.
+Do not skip ahead to radius persistence, layer rendering, saved places, Overpass, or later architecture tasks.
