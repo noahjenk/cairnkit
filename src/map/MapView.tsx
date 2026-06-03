@@ -47,7 +47,7 @@ export function MapView({
     onBuildingLoadStatusChange,
     onMapClick,
     savedPlaces,
-    showMockBuildingsDebugLayer: isLayerVisible('mock-buildings-debug'),
+    showLoadedBuildingsDebugLayer: isLayerVisible('loaded-buildings-debug'),
     showRuralAreaFinderAvoidZoneLayer: isToolEnabled(ruralAreaFinderTool.id),
     temporaryPinCoordinates
   });

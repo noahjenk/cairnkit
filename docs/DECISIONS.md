@@ -53,3 +53,39 @@ Reason: test tooling can be added later for services and adapters once the archi
 These features are planned for later.
 
 Reason: the MVP should stay focused on the map, modular architecture, Rural Area Finder, and basic saved places.
+
+## Decision 010: Keep live task progress in the task ledger
+
+The live completed-task summary and current next task belong in `docs/tasks/README.md`.
+
+Reason: roadmap, workflow, architecture, and project-context docs were starting to repeat the same current-task data. A single live ledger reduces contradiction while keeping stable planning docs useful.
+
+## Decision 011: Rural Area Finder output is controlled by the tool
+
+The Rural Area Finder avoid-zone layer should appear when the Rural Area Finder tool is enabled. It should not be exposed as an ordinary Layers panel toggle.
+
+Reason: the avoid zone is the tool's primary output, so tying it to the tool state makes the UI easier to understand and prevents duplicate controls for the same behavior.
+
+## Decision 012: Render temporary pins as a MapLibre layer
+
+The temporary clicked pin is rendered through a GeoJSON source and circle layer instead of a DOM marker.
+
+Reason: this avoided the white-screen failure seen when placing pins and keeps temporary map output inside the MapLibre layer model.
+
+## Decision 013: Keep Overpass behind a data-source adapter
+
+Overpass building loading should stay behind `overpassBuildingSource` and the shared `DataSourceAdapter` interface.
+
+Reason: Rural Area Finder and future tools should consume shared feature data without knowing Overpass query details, request formatting, or response conversion.
+
+## Decision 014: Use a simple in-memory building cache first
+
+Bounds-based building results are cached in memory using rounded map bounds keys.
+
+Reason: this reduces repeated Overpass requests during early testing without adding persistence, invalidation policy, or a larger caching library before the data flow is proven.
+
+## Decision 015: Use lightweight approximate avoid-zone geometry first
+
+Avoid zones are currently generated as approximate grouped polygons around source buildings.
+
+Reason: this gives visible radius-driven output and avoids stacked shading without adding a GIS dependency or implementing precise dissolved buffers too early. More accurate GIS geometry can come later as a focused refinement.

@@ -40,6 +40,7 @@ Before implementing a change, Copilot should read the relevant docs:
 - Update docs when decisions or structure change.
 - Explain what changed after each implementation.
 - Explain how to test each implementation.
+- Keep live task progress centralized in `docs/tasks/README.md`.
 
 ## Copilot should not
 
@@ -52,7 +53,8 @@ Before implementing a change, Copilot should read the relevant docs:
 - Build advanced drawing tools early.
 - Rewrite architecture without approval.
 - Add libraries without explaining why.
-- Skip ahead to Overpass before mock data works.
+- Couple tools directly to Overpass instead of the data-source adapter boundary.
+- Duplicate current next-task instructions across stable docs.
 
 ## Expected response after each implementation
 

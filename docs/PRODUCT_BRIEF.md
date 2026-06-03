@@ -40,7 +40,7 @@ Rural Area Finder is one tool inside CairnKit. It should not become the whole ap
 
 - Full-screen MapLibre map.
 - CairnKit app shell.
-- Top bar.
+- Thin top bar.
 - Left workspace panel.
 - Search box placeholder.
 - Status indicator.
@@ -48,11 +48,16 @@ Rural Area Finder is one tool inside CairnKit. It should not become the whole ap
 - Layer system.
 - Rural Area Finder shell.
 - Mock building data source.
-- Radius slider.
-- Approximate avoid-zone layer.
+- Radius number input.
+- Approximate avoid-zone layer from loaded building features.
 - Saved places stored locally.
 - All Places list.
 - Saved-place pins on the map.
+- Temporary clicked pin and save flow.
+- Overpass building data adapter foundation.
+- Debounced bounds-based building loading.
+- Simple in-memory building cache.
+- Manual building refresh and loading/error status.
 
 ## MVP does not include
 
@@ -69,3 +74,4 @@ Rural Area Finder is one tool inside CairnKit. It should not become the whole ap
 - Production backend.
 - Perfect GIS processing.
 - Polished dissolved buffer algorithm.
+- Polished Rural Area Finder data-status UI.

@@ -47,10 +47,12 @@ This task should not include:
 
 ## Acceptance criteria
 
-- [ ] Avoid-zone output is visually less boxy than expanded rectangles.
-- [ ] Radius setting still affects output.
-- [ ] No heavy geometry dependency has been added without justification.
-- [ ] App still builds.
+- [x] Avoid-zone output is visually less boxy than expanded rectangles.
+- [x] Radius setting still affects output.
+- [x] No heavy geometry dependency has been added without justification.
+- [x] App still builds.
+
+Completion note: accepted as a completed avoid-zone geometry refinement task. See `docs/tasks/README.md` for the current next task.
 
 ## Testing instructions
 

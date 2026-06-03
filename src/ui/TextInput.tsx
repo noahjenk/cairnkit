@@ -2,7 +2,7 @@ import type { InputHTMLAttributes } from 'react';
 
 type TextInputProps = Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> & {
   label: string;
-  type?: 'email' | 'password' | 'search' | 'text' | 'url';
+  type?: 'email' | 'number' | 'password' | 'search' | 'text' | 'url';
 };
 
 export function TextInput({ className = '', label, type = 'text', ...props }: TextInputProps) {

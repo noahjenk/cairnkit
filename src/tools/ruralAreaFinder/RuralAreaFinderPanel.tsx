@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Slider } from '../../ui';
+import { TextInput } from '../../ui';
 import {
   RURAL_AREA_FINDER_DEFAULT_RADIUS_METERS,
   RURAL_AREA_FINDER_MAX_RADIUS_METERS,
@@ -12,8 +12,12 @@ export function RuralAreaFinderPanel() {
   const [radiusMeters, setRadiusMeters] = useState(loadRuralAreaFinderRadius);
 
   function handleRadiusChange(value: number) {
-    setRadiusMeters(value);
-    saveRuralAreaFinderRadius(value);
+    if (!Number.isFinite(value)) {
+      return;
+    }
+
+    const nextRadiusMeters = saveRuralAreaFinderRadius(value);
+    setRadiusMeters(nextRadiusMeters);
   }
 
   return (
@@ -24,12 +28,13 @@ export function RuralAreaFinderPanel() {
           <h3>Search radius</h3>
           <span>{radiusMeters.toLocaleString()} m</span>
         </div>
-        <Slider
+        <TextInput
           label="Distance from buildings"
           max={RURAL_AREA_FINDER_MAX_RADIUS_METERS}
           min={RURAL_AREA_FINDER_MIN_RADIUS_METERS}
           onChange={(event) => handleRadiusChange(event.currentTarget.valueAsNumber)}
           step={RURAL_AREA_FINDER_RADIUS_STEP_METERS}
+          type="number"
           value={radiusMeters}
         />
         <p>

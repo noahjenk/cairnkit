@@ -2,8 +2,8 @@ import type { LayerDefinition } from './layerTypes';
 
 export const layerRegistry: LayerDefinition[] = [
   {
-    id: 'mock-buildings-debug',
-    name: 'Mock buildings debug',
-    summary: 'Shows local mock building polygons for early Rural Area Finder testing.'
+    id: 'loaded-buildings-debug',
+    name: 'Loaded buildings',
+    summary: 'Shows the currently loaded building polygons for the visible map area.'
   }
 ];

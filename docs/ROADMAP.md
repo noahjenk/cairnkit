@@ -36,6 +36,8 @@ Includes:
 
 Status details are tracked in `docs/tasks/README.md`.
 
+Durable status: implemented.
+
 ## Phase 2: Architecture foundations
 
 Goal: create tool, layer, data, and storage boundaries before building features deeply.
@@ -51,6 +53,8 @@ Includes:
 
 Status details and the current next task are tracked in `docs/tasks/README.md`.
 
+Durable status: implemented at MVP depth. Keep expanding these boundaries only when a task needs them.
+
 ## Phase 3: Rural Area Finder MVP
 
 Goal: prove the first modular tool works.
@@ -62,8 +66,10 @@ Includes:
 3. Remembered radius.
 4. Mock building features.
 5. Approximate shaded avoid-zone layer.
-6. Layer toggle.
+6. Tool-owned avoid-zone visibility.
 7. Status updates.
+
+Durable status: implemented with loaded building features. The current output groups overlapping avoid circles into approximate hull polygons, not a precise dissolved GIS buffer.
 
 ## Phase 4: Saved places MVP
 
@@ -72,11 +78,13 @@ Goal: make CairnKit useful as a personal place catalogue.
 Includes:
 
 1. Click map to temporary pin.
-2. Bottom card.
+2. Workspace save card.
 3. Save form.
 4. Local persistence.
 5. Saved pins.
 6. All Places list.
+
+Durable status: implemented at local-first MVP depth.
 
 ## Phase 5: Real data source
 
@@ -91,6 +99,8 @@ Includes:
 5. Simple cache.
 6. Manual refresh.
 
+Durable status: foundation implemented. Loaded and cached Overpass building features now feed Rural Area Finder avoid-zone rendering and the loaded-buildings debug layer.
+
 ## Phase 6: Refinement
 
 Goal: improve UX, performance, and accuracy.
@@ -103,3 +113,5 @@ Includes:
 4. Search placeholder becomes useful.
 5. Mobile layout planning.
 6. Docs updated from real implementation.
+
+Durable status: underway. Current task progress and the next task are tracked only in `docs/tasks/README.md`.

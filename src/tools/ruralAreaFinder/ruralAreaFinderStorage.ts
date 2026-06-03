@@ -46,4 +46,6 @@ export function saveRuralAreaFinderRadius(radiusMeters: number) {
       detail: { radiusMeters: nextRadius }
     })
   );
+
+  return nextRadius;
 }

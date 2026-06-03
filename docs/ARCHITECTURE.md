@@ -20,7 +20,7 @@ CairnKit is organised around these boundaries:
 8. Saved places
 9. Shared UI
 
-## Planned source folder structure
+## Current source folder structure
 
 ```txt
 src/
@@ -39,10 +39,7 @@ src/
   map/
     MapView.tsx
     mapConfig.ts
-    mapTypes.ts
     useMapInstance.ts
-    useMapCameraState.ts
-    mapEvents.ts
 
   tools/
     toolTypes.ts
@@ -51,11 +48,11 @@ src/
     useTools.ts
 
     ruralAreaFinder/
-      RuralAreaFinderTool.tsx
-      ruralAreaFinderTypes.ts
       ruralAreaFinderDefaults.ts
-      ruralAreaFinderService.ts
+      ruralAreaFinderStorage.ts
       RuralAreaFinderPanel.tsx
+      ruralAreaFinderTool.ts
+      ruralAreaFinderAvoidZone.ts
 
   layers/
     layerTypes.ts
@@ -95,26 +92,22 @@ src/
     storageKeys.ts
 
   state/
-    appState.ts
-    mapState.ts
-    toolState.ts
+    README.md
 
   ui/
     Button.tsx
     Panel.tsx
-    Toggle.tsx
     Slider.tsx
     TextInput.tsx
     TextArea.tsx
 
   utils/
-    coordinates.ts
     ids.ts
-    geojson.ts
     debounce.ts
+    boundsCache.ts
 ```
 
-This structure does not need to be created all at once. It is the intended direction for the codebase.
+This structure should continue to evolve in small tasks. Add files when a real boundary needs them, not just because they appear in an earlier plan.
 
 ## App shell
 
@@ -127,6 +120,9 @@ It should know that CairnKit has:
 - a left workspace panel
 - a floating search box placeholder
 - a status indicator
+- saved-place state
+- current temporary pin state
+- building loading status
 
 It should not know how Overpass works, how buffers are calculated, or how saved places are stored.
 
@@ -136,6 +132,19 @@ The map module owns MapLibre setup, map lifecycle, map camera state, and map eve
 
 React components should not randomly create MapLibre sources and layers directly. Map changes should go through clear map or layer helpers.
 
+`useMapInstance` currently owns:
+
+- MapLibre setup and teardown.
+- map click handling for temporary saved-place pins.
+- saved-place marker rendering.
+- the loaded buildings debug layer.
+- the Rural Area Finder avoid-zone layer.
+- debounced bounds-based Overpass building loading.
+- the simple in-memory building feature cache.
+- manual refresh handling.
+
+This is acceptable for the MVP, but future map work should look for small opportunities to move repeated source/layer sync code behind helpers.
+
 ## Tool system
 
 Tools are modular features that can be enabled, disabled, configured, and connected to output layers.
@@ -144,18 +153,22 @@ The first real tool is Rural Area Finder.
 
 Future tools should be added through the tool registry rather than by rewriting the app shell.
 
+Rural Area Finder currently has an enabled state, radius setting, persisted radius value, panel UI, and an approximate merged avoid-zone output. Its avoid-zone visibility is controlled by the Rural Area Finder toggle and radius, not by the generic layer list.
+
 ## Layer system
 
 Layers are map outputs that can be shown, hidden, and owned by tools.
 
-Example layers:
+Example map outputs:
 
 - saved-place pins
 - temporary clicked pin
 - rural-area-finder-avoid-zone
-- rural-area-finder-source-features-debug
+- loaded-buildings-debug
 
 Rural Area Finder should own its own layer outputs. It should not own the entire map.
+
+The loaded buildings debug layer is a layer-list item because it is an inspection aid. Rural Area Finder avoid zones are tool-owned output and should stay tied to the tool controls.
 
 ## Data-source adapters
 
@@ -163,7 +176,9 @@ Data-source adapters hide where map feature data comes from.
 
 Rural Area Finder should ask for features in a common format. It should not care whether those features came from mock data, Overpass, a backend cache, or uploaded GeoJSON.
 
-The first data source should be mock building data. Overpass comes later.
+The first data source is mock building data.
+
+The Overpass building adapter is also present. It converts Overpass building geometry into the shared `MapFeature` shape, loads by map bounds, and is called through debounced map movement plus manual refresh. The current avoid-zone layer uses the latest loaded or cached building features for the map bounds.
 
 ## Feature types
 
@@ -200,6 +215,8 @@ A saved place contains:
 
 Saved places are shown as pins on the map and listed in the All Places panel.
 
+Clicking the map creates a temporary pin. The user can save that pin through the workspace panel, after which it becomes a saved place and the temporary pin is cleared.
+
 Do not add tags, photos, accounts, sharing, or project grouping in the MVP.
 
 ## State approach
@@ -207,3 +224,10 @@ Do not add tags, photos, accounts, sharing, or project grouping in the MVP.
 Use React state and context first.
 
 Avoid adding Redux, Zustand, Jotai, or similar state libraries until the app genuinely needs one.
+
+Current app state is intentionally simple:
+
+- tool and layer registries use React context
+- saved places use localStorage through a service and storage adapter
+- Rural Area Finder radius uses localStorage through a dedicated storage helper
+- building features use an in-memory bounds cache inside the map hook

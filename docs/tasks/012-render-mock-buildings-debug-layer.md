@@ -54,7 +54,7 @@ This task should not include:
 
 ## Acceptance criteria
 
-- [x] Mock buildings debug layer appears in the Layers list.
+- [x] Development fixture building layer appears in the Layers list.
 - [x] Layer visibility can be toggled.
 - [x] Mock building polygons render on the map when visible.
 - [x] No avoid-zone logic has been added.
@@ -62,6 +62,8 @@ This task should not include:
 - [x] App still builds.
 
 Completion note: accepted as a completed debug-layer task. Task 013 is the next implementation task.
+
+Superseded note: Task 024.5 replaced this fixed mock debug output with a loaded-buildings debug layer.
 
 ## Testing instructions
 

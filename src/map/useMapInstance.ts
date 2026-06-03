@@ -8,7 +8,6 @@ import {
   mapFeaturesToGeoJson
 } from '../layers';
 import {
-  mockBuildingSource,
   overpassBuildingSource,
   type CoordinateBounds,
   type MapFeature
@@ -18,11 +17,11 @@ import { createApproximateAvoidZoneFeatures } from '../tools/ruralAreaFinder/rur
 import { createBoundsCacheKey, debounce } from '../utils';
 import { cairnKitMapOptions } from './mapConfig';
 
-const MOCK_BUILDINGS_DEBUG_LAYER_ID = 'mock-buildings-debug';
+const LOADED_BUILDINGS_DEBUG_LAYER_ID = 'loaded-buildings-debug';
 const RURAL_AREA_FINDER_AVOID_ZONE_LAYER_ID = 'rural-area-finder-avoid-zone';
 const TEMPORARY_PIN_LAYER_ID = 'temporary-pin';
-const mockBuildingsDebugMapLayerId = getMapLibreLayerId(MOCK_BUILDINGS_DEBUG_LAYER_ID);
-const mockBuildingsDebugMapSourceId = getMapLibreSourceId(MOCK_BUILDINGS_DEBUG_LAYER_ID);
+const loadedBuildingsDebugMapLayerId = getMapLibreLayerId(LOADED_BUILDINGS_DEBUG_LAYER_ID);
+const loadedBuildingsDebugMapSourceId = getMapLibreSourceId(LOADED_BUILDINGS_DEBUG_LAYER_ID);
 const ruralAreaFinderAvoidZoneMapLayerId = getMapLibreLayerId(RURAL_AREA_FINDER_AVOID_ZONE_LAYER_ID);
 const ruralAreaFinderAvoidZoneMapSourceId = getMapLibreSourceId(RURAL_AREA_FINDER_AVOID_ZONE_LAYER_ID);
 const temporaryPinMapLayerId = getMapLibreLayerId(TEMPORARY_PIN_LAYER_ID);
@@ -34,16 +33,9 @@ type UseMapInstanceOptions = {
   onMapClick: (coordinates: SavedPlaceCoordinates) => void;
   ruralAreaFinderRadiusMeters: number;
   savedPlaces: SavedPlace[];
-  showMockBuildingsDebugLayer: boolean;
+  showLoadedBuildingsDebugLayer: boolean;
   showRuralAreaFinderAvoidZoneLayer: boolean;
   temporaryPinCoordinates: SavedPlaceCoordinates | null;
-};
-
-const developmentBounds = {
-  west: -1.56,
-  south: 54.48,
-  east: -1.49,
-  north: 54.53
 };
 
 function getMapBounds(map: Map): CoordinateBounds {
@@ -57,28 +49,26 @@ function getMapBounds(map: Map): CoordinateBounds {
   };
 }
 
-async function loadDevelopmentMockBuildingFeatures() {
-  return mockBuildingSource.loadFeatures({
-    bounds: developmentBounds,
-    featureTypeId: buildingFeatureType.id
-  });
-}
+function addLoadedBuildingsDebugLayer(map: Map, buildingFeatures: MapFeature[]) {
+  const buildingFeaturesGeoJson = mapFeaturesToGeoJson(buildingFeatures);
+  const existingSource = map.getSource(loadedBuildingsDebugMapSourceId);
 
-async function addMockBuildingsDebugLayer(map: Map) {
-  const mockBuildingFeatures = await loadDevelopmentMockBuildingFeatures();
+  if (existingSource && 'setData' in existingSource) {
+    (existingSource as GeoJSONSource).setData(buildingFeaturesGeoJson);
+  }
 
-  if (!map.getSource(mockBuildingsDebugMapSourceId)) {
-    map.addSource(mockBuildingsDebugMapSourceId, {
+  if (!existingSource) {
+    map.addSource(loadedBuildingsDebugMapSourceId, {
       type: 'geojson',
-      data: mapFeaturesToGeoJson(mockBuildingFeatures)
+      data: buildingFeaturesGeoJson
     });
   }
 
-  if (!map.getLayer(mockBuildingsDebugMapLayerId)) {
+  if (!map.getLayer(loadedBuildingsDebugMapLayerId)) {
     map.addLayer({
-      id: mockBuildingsDebugMapLayerId,
+      id: loadedBuildingsDebugMapLayerId,
       type: 'fill',
-      source: mockBuildingsDebugMapSourceId,
+      source: loadedBuildingsDebugMapSourceId,
       paint: {
         'fill-color': '#d9480f',
         'fill-opacity': 0.34,
@@ -88,9 +78,12 @@ async function addMockBuildingsDebugLayer(map: Map) {
   }
 }
 
-async function addRuralAreaFinderAvoidZoneLayer(map: Map, radiusMeters: number) {
-  const mockBuildingFeatures = await loadDevelopmentMockBuildingFeatures();
-  const avoidZoneFeatures = createApproximateAvoidZoneFeatures(mockBuildingFeatures, radiusMeters);
+function addRuralAreaFinderAvoidZoneLayer(
+  map: Map,
+  buildingFeatures: MapFeature[],
+  radiusMeters: number
+) {
+  const avoidZoneFeatures = createApproximateAvoidZoneFeatures(buildingFeatures, radiusMeters);
   const avoidZoneGeoJson = mapFeaturesToGeoJson(avoidZoneFeatures);
   const existingSource = map.getSource(ruralAreaFinderAvoidZoneMapSourceId);
 
@@ -117,9 +110,32 @@ async function addRuralAreaFinderAvoidZoneLayer(map: Map, radiusMeters: number) 
           'fill-outline-color': '#e67700'
         }
       },
-      map.getLayer(mockBuildingsDebugMapLayerId) ? mockBuildingsDebugMapLayerId : undefined
+      map.getLayer(loadedBuildingsDebugMapLayerId) ? loadedBuildingsDebugMapLayerId : undefined
     );
   }
+}
+
+function syncRuralAreaFinderAvoidZoneLayer(
+  map: Map,
+  buildingFeatures: MapFeature[],
+  radiusMeters: number,
+  isVisible: boolean
+) {
+  if (isVisible) {
+    addRuralAreaFinderAvoidZoneLayer(map, buildingFeatures, radiusMeters);
+    return;
+  }
+
+  removeRuralAreaFinderAvoidZoneLayer(map);
+}
+
+function syncLoadedBuildingsDebugLayer(map: Map, buildingFeatures: MapFeature[], isVisible: boolean) {
+  if (isVisible) {
+    addLoadedBuildingsDebugLayer(map, buildingFeatures);
+    return;
+  }
+
+  removeLoadedBuildingsDebugLayer(map);
 }
 
 function removeRuralAreaFinderAvoidZoneLayer(map: Map) {
@@ -132,13 +148,13 @@ function removeRuralAreaFinderAvoidZoneLayer(map: Map) {
   }
 }
 
-function removeMockBuildingsDebugLayer(map: Map) {
-  if (map.getLayer(mockBuildingsDebugMapLayerId)) {
-    map.removeLayer(mockBuildingsDebugMapLayerId);
+function removeLoadedBuildingsDebugLayer(map: Map) {
+  if (map.getLayer(loadedBuildingsDebugMapLayerId)) {
+    map.removeLayer(loadedBuildingsDebugMapLayerId);
   }
 
-  if (map.getSource(mockBuildingsDebugMapSourceId)) {
-    map.removeSource(mockBuildingsDebugMapSourceId);
+  if (map.getSource(loadedBuildingsDebugMapSourceId)) {
+    map.removeSource(loadedBuildingsDebugMapSourceId);
   }
 }
 
@@ -213,7 +229,7 @@ export function useMapInstance({
   onMapClick,
   ruralAreaFinderRadiusMeters,
   savedPlaces,
-  showMockBuildingsDebugLayer,
+  showLoadedBuildingsDebugLayer,
   showRuralAreaFinderAvoidZoneLayer,
   temporaryPinCoordinates
 }: UseMapInstanceOptions) {
@@ -221,7 +237,17 @@ export function useMapInstance({
   const mapRef = useRef<Map | null>(null);
   const buildingFeatureCacheRef = useRef<globalThis.Map<string, MapFeature[]>>(new globalThis.Map());
   const buildingLoadRequestIdRef = useRef(0);
+  const latestBuildingFeaturesRef = useRef<MapFeature[]>([]);
+  const ruralAreaFinderRadiusMetersRef = useRef(ruralAreaFinderRadiusMeters);
+  const showLoadedBuildingsDebugLayerRef = useRef(showLoadedBuildingsDebugLayer);
+  const showRuralAreaFinderAvoidZoneLayerRef = useRef(showRuralAreaFinderAvoidZoneLayer);
   const savedPlaceMarkersRef = useRef<maplibregl.Marker[]>([]);
+
+  useEffect(() => {
+    ruralAreaFinderRadiusMetersRef.current = ruralAreaFinderRadiusMeters;
+    showLoadedBuildingsDebugLayerRef.current = showLoadedBuildingsDebugLayer;
+    showRuralAreaFinderAvoidZoneLayerRef.current = showRuralAreaFinderAvoidZoneLayer;
+  }, [ruralAreaFinderRadiusMeters, showLoadedBuildingsDebugLayer, showRuralAreaFinderAvoidZoneLayer]);
 
   useEffect(() => {
     if (!mapContainerRef.current || mapRef.current) {
@@ -285,6 +311,18 @@ export function useMapInstance({
       buildingLoadRequestIdRef.current = requestId;
 
       if (cachedFeatures && !forceRefresh) {
+        latestBuildingFeaturesRef.current = cachedFeatures;
+        syncLoadedBuildingsDebugLayer(
+          mapRef.current,
+          cachedFeatures,
+          showLoadedBuildingsDebugLayerRef.current
+        );
+        syncRuralAreaFinderAvoidZoneLayer(
+          mapRef.current,
+          cachedFeatures,
+          ruralAreaFinderRadiusMetersRef.current,
+          showRuralAreaFinderAvoidZoneLayerRef.current
+        );
         onBuildingLoadStatusChange({
           featureCount: cachedFeatures.length,
           source: 'cache',
@@ -303,6 +341,18 @@ export function useMapInstance({
 
         if (buildingLoadRequestIdRef.current === requestId) {
           buildingFeatureCacheRef.current.set(cacheKey, features);
+          latestBuildingFeaturesRef.current = features;
+          syncLoadedBuildingsDebugLayer(
+            mapRef.current,
+            features,
+            showLoadedBuildingsDebugLayerRef.current
+          );
+          syncRuralAreaFinderAvoidZoneLayer(
+            mapRef.current,
+            features,
+            ruralAreaFinderRadiusMetersRef.current,
+            showRuralAreaFinderAvoidZoneLayerRef.current
+          );
           onBuildingLoadStatusChange({
             featureCount: features.length,
             source: 'network',
@@ -369,6 +419,18 @@ export function useMapInstance({
         .then((features) => {
           if (buildingLoadRequestIdRef.current === requestId) {
             buildingFeatureCacheRef.current.set(cacheKey, features);
+            latestBuildingFeaturesRef.current = features;
+            syncLoadedBuildingsDebugLayer(
+              currentMap,
+              features,
+              showLoadedBuildingsDebugLayerRef.current
+            );
+            syncRuralAreaFinderAvoidZoneLayer(
+              currentMap,
+              features,
+              ruralAreaFinderRadiusMetersRef.current,
+              showRuralAreaFinderAvoidZoneLayerRef.current
+            );
             onBuildingLoadStatusChange({
               featureCount: features.length,
               source: 'refresh',
@@ -452,30 +514,29 @@ export function useMapInstance({
       return;
     }
 
-    function syncMockBuildingsDebugLayer() {
+    function syncLoadedBuildingsDebugLayerForCurrentState() {
       if (!mapRef.current) {
         return;
       }
 
-      if (showMockBuildingsDebugLayer) {
-        void addMockBuildingsDebugLayer(mapRef.current);
-        return;
-      }
-
-      removeMockBuildingsDebugLayer(mapRef.current);
+      syncLoadedBuildingsDebugLayer(
+        mapRef.current,
+        latestBuildingFeaturesRef.current,
+        showLoadedBuildingsDebugLayer
+      );
     }
 
     if (map.loaded()) {
-      syncMockBuildingsDebugLayer();
+      syncLoadedBuildingsDebugLayerForCurrentState();
       return;
     }
 
-    map.once('load', syncMockBuildingsDebugLayer);
+    map.once('load', syncLoadedBuildingsDebugLayerForCurrentState);
 
     return () => {
-      map.off('load', syncMockBuildingsDebugLayer);
+      map.off('load', syncLoadedBuildingsDebugLayerForCurrentState);
     };
-  }, [showMockBuildingsDebugLayer]);
+  }, [showLoadedBuildingsDebugLayer]);
 
   useEffect(() => {
     const map = mapRef.current;
@@ -484,28 +545,28 @@ export function useMapInstance({
       return;
     }
 
-    function syncRuralAreaFinderAvoidZoneLayer() {
+    function syncRuralAreaFinderAvoidZoneLayerForCurrentState() {
       if (!mapRef.current) {
         return;
       }
 
-      if (showRuralAreaFinderAvoidZoneLayer) {
-        void addRuralAreaFinderAvoidZoneLayer(mapRef.current, ruralAreaFinderRadiusMeters);
-        return;
-      }
-
-      removeRuralAreaFinderAvoidZoneLayer(mapRef.current);
+      syncRuralAreaFinderAvoidZoneLayer(
+        mapRef.current,
+        latestBuildingFeaturesRef.current,
+        ruralAreaFinderRadiusMeters,
+        showRuralAreaFinderAvoidZoneLayer
+      );
     }
 
     if (map.loaded()) {
-      syncRuralAreaFinderAvoidZoneLayer();
+      syncRuralAreaFinderAvoidZoneLayerForCurrentState();
       return;
     }
 
-    map.once('load', syncRuralAreaFinderAvoidZoneLayer);
+    map.once('load', syncRuralAreaFinderAvoidZoneLayerForCurrentState);
 
     return () => {
-      map.off('load', syncRuralAreaFinderAvoidZoneLayer);
+      map.off('load', syncRuralAreaFinderAvoidZoneLayerForCurrentState);
     };
   }, [ruralAreaFinderRadiusMeters, showRuralAreaFinderAvoidZoneLayer]);
 

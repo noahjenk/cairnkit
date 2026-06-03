@@ -10,9 +10,9 @@ Tagline:
 
 ## Current phase
 
-The project is currently being built from scratch.
+The project is in MVP refinement.
 
-Do not assume existing app code unless it is already present in the repo.
+The app shell, MapLibre map, tool/layer/data/storage boundaries, Rural Area Finder shell, saved places, Overpass adapter foundation, cache, refresh, and status handling are already present. Check the repo before adding new structure.
 
 ## Core stack
 
@@ -25,7 +25,7 @@ The planned stack is:
 - Plain CSS or CSS modules first
 - Frontend-only MVP
 - localStorage behind a storage adapter
-- mock data before Overpass
+- data-source adapters for mock and Overpass data
 
 ## Main architecture rules
 
@@ -55,6 +55,8 @@ If implementation changes the architecture, update `docs/ARCHITECTURE.md`.
 If implementation changes the build order, update `docs/ROADMAP.md`.
 
 If a major decision changes, update `docs/DECISIONS.md`.
+
+For task progress, read `docs/tasks/README.md`. Do not duplicate the current next task here.
 
 ## MVP exclusions
 
@@ -122,7 +124,7 @@ Read `docs/CHATGPT_PROJECT_CONTEXT.md` for background on how the repo docs were 
 
 Use that file as context, not as a replacement for the active task briefs, architecture docs, roadmap, or decision log.
 
-## Current next implementation task
+## Task ledger
 
 Read the live task ledger for the current next implementation task:
 
