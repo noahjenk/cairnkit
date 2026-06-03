@@ -1,5 +1,5 @@
 import { useLayers } from '../../layers';
-import { useTools } from '../../tools';
+import { RuralAreaFinderPanel, ruralAreaFinderTool, useTools } from '../../tools';
 import { Panel, Toggle } from '../../ui';
 
 const sections = [
@@ -34,6 +34,8 @@ export function WorkspacePanel() {
             ))}
           </div>
         </section>
+
+        {isToolEnabled(ruralAreaFinderTool.id) ? <RuralAreaFinderPanel /> : null}
 
         <section className="workspace-section">
           <h2>Layers</h2>

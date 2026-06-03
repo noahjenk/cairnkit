@@ -56,12 +56,14 @@ This task should not include:
 
 ## Acceptance criteria
 
-- [ ] Rural Area Finder appears as a registered tool.
-- [ ] Rural Area Finder can be enabled and disabled through the workspace.
-- [ ] Enabling the tool shows a small placeholder panel.
-- [ ] No mock feature loading has been added to the tool yet.
-- [ ] No map layer rendering or avoid-zone logic has been added.
-- [ ] App still builds.
+- [x] Rural Area Finder appears as a registered tool.
+- [x] Rural Area Finder can be enabled and disabled through the workspace.
+- [x] Enabling the tool shows a small placeholder panel.
+- [x] No mock feature loading has been added to the tool yet.
+- [x] No map layer rendering or avoid-zone logic has been added.
+- [x] App still builds.
+
+Completion note: accepted as a completed tool-shell task. Task 011 is the next implementation task.
 
 ## Testing instructions
 
