@@ -22,11 +22,11 @@ Those files should only be updated when their durable guidance changes, not afte
 
 ## Current Project Status
 
-The repo has completed Tasks 001 through 024.10, plus inserted Tasks 8.5, 8.6, and 10.5.
+The repo has completed Tasks 001 through 036, plus inserted Tasks 8.5, 8.6, and 10.5.
 
-The current next implementation task is Task 025: `025-add-rural-area-finder-data-status.md`.
+The current next implementation task is Task 037: `037-highlight-selected-saved-place-search-result.md`.
 
-Copilot must not skip ahead to later refinement work before adding Rural Area Finder data-status UI.
+Copilot must not skip ahead to later refinement work before highlighting selected saved-place search results.
 
 ## Update Rules
 
@@ -124,6 +124,18 @@ After those inserted tasks, regular task numbering should continue:
 024.9-[short-task-name].md
 024.10-[short-task-name].md
 025-[short-task-name].md
+026-[short-task-name].md
+027-[short-task-name].md
+028-[short-task-name].md
+029-[short-task-name].md
+030-[short-task-name].md
+031-[short-task-name].md
+032-[short-task-name].md
+033-[short-task-name].md
+034-[short-task-name].md
+035-[short-task-name].md
+036-[short-task-name].md
+037-[short-task-name].md
 ```
 
 Task numbers should never be reused.
@@ -175,7 +187,19 @@ After the initial task briefs are complete, the next expected tasks should conti
 23. Use polygon union for avoid zones. Done.
 24. Stabilize avoid-zone union performance. Done.
 25. Move avoid-zone union to worker. Done.
-26. Add Rural Area Finder data status.
+26. Add Rural Area Finder data status. Done.
+27. Add Rural Area Finder processing status. Done.
+28. Use canvas mask avoid-zone rendering. Done.
+29. Add Rural Area Finder opacity control. Done.
+30. Load buildings only when Rural Area Finder is enabled. Done.
+31. Add collapsible workspace panel. Done.
+32. Move loaded buildings visibility to Rural Area Finder. Done.
+33. Decouple Rural Area Finder settings disclosure from the active toggle. Done.
+34. Simplify Rural Area Finder setting labels. Done.
+35. Approximate avoid zones from building perimeters. Done.
+36. Make status indicator more useful. Done.
+37. Make search box useful. Done.
+38. Highlight selected saved place search result.
 
 This list is the later implementation sequence now that the initial task briefs are complete.
 
@@ -192,7 +216,7 @@ It should first produce a proposed next task brief and explain why that task is 
 The current next implementation task is:
 
 ```txt
-025-add-rural-area-finder-data-status.md
+037-highlight-selected-saved-place-search-result.md
 ```
 
-Copilot must start with Task 025 and keep it focused on Rural Area Finder data-status UI.
+Copilot must start with Task 037 and keep it focused on highlighting selected saved-place search results.

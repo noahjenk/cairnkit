@@ -48,10 +48,10 @@ This task should not include:
 
 ## Acceptance criteria
 
-- [ ] Rural Area Finder panel shows the loaded building feature count.
-- [ ] Loading, cached, refreshed, empty, and error states are understandable.
-- [ ] Existing app-wide status indicator still works.
-- [ ] No data loading or geometry behavior changes are introduced.
+- [x] Rural Area Finder panel shows the loaded building feature count.
+- [x] Loading, cached, refreshed, empty, and error states are understandable.
+- [x] Existing app-wide status indicator still works.
+- [x] No data loading or geometry behavior changes are introduced.
 
 ## Testing instructions
 
@@ -66,3 +66,7 @@ Then manually check Rural Area Finder while the map loads, after a cached move, 
 ## Notes for Copilot
 
 Keep this as a UI/data-status task. Do not change the data source or avoid-zone generation in this task.
+
+## Completion note
+
+Added a compact building-data status line to the Rural Area Finder panel while keeping the existing app-wide status indicator unchanged.

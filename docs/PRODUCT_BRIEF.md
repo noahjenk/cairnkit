@@ -58,6 +58,7 @@ Rural Area Finder is one tool inside CairnKit. It should not become the whole ap
 - Debounced bounds-based building loading.
 - Simple in-memory building cache.
 - Manual building refresh and loading/error status.
+- Rural Area Finder avoid-zone opacity control.
 
 ## MVP does not include
 
@@ -74,4 +75,4 @@ Rural Area Finder is one tool inside CairnKit. It should not become the whole ap
 - Production backend.
 - Perfect GIS processing.
 - Polished dissolved buffer algorithm.
-- Polished Rural Area Finder data-status UI.
+- Polished Rural Area Finder processing-status UI.

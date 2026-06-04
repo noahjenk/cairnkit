@@ -69,7 +69,7 @@ Includes:
 6. Tool-owned avoid-zone visibility.
 7. Status updates.
 
-Durable status: implemented with loaded building features. The current output uses polygon union to merge overlapping approximate avoid circles.
+Durable status: implemented with loaded building features. The current output uses a canvas mask so overlapping avoid circles keep consistent opacity without polygon union.
 
 ## Phase 4: Saved places MVP
 

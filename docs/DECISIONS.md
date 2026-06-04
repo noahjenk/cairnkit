@@ -96,8 +96,18 @@ Rural Area Finder uses `polygon-clipping` to union overlapping approximate avoid
 
 Reason: convex hulls did not match the intended shape. A focused polygon union dependency produces combined shaded areas that follow the overlapping circle outlines while keeping the frontend-only MVP architecture.
 
+Superseded by Decision 018.
+
 ## Decision 017: Move expensive avoid-zone union work off the main thread
 
 Rural Area Finder runs avoid-zone polygon union in a Web Worker.
 
 Reason: polygon union runs in the browser during the frontend-only MVP. A worker lets dense areas, including villages, still produce shaded output without blocking React and MapLibre on the main UI thread.
+
+Superseded by Decision 018.
+
+## Decision 018: Use a canvas mask for avoid-zone opacity
+
+Rural Area Finder renders avoid zones as an opaque georeferenced canvas mask displayed through a raster layer with fixed opacity.
+
+Reason: the desired behavior is constant visual opacity where circles overlap. A canvas mask gives that behavior more cheaply than polygon union and avoids worker complexity for the MVP.

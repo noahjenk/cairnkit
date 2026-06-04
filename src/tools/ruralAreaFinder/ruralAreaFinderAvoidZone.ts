@@ -1,185 +1,188 @@
-import { union, type MultiPolygon, type Polygon } from 'polygon-clipping';
-import type { MapFeature } from '../../dataSources';
-import { buildingFeatureType } from '../../featureTypes';
+import type { CoordinateBounds, MapFeature } from '../../dataSources';
 
 const METERS_PER_LATITUDE_DEGREE = 111_320;
-const AVOID_ZONE_SEGMENTS = 20;
+const AVOID_ZONE_CANVAS_SIZE = 1024;
 
-type AvoidZoneCircle = {
-  center: {
-    longitude: number;
-    latitude: number;
-  };
-  radiusMeters: number;
-  ring: [number, number][];
-};
-
-function getPolygonCoordinates(feature: MapFeature) {
+function getPolygonRings(feature: MapFeature) {
   if (feature.geometry.type !== 'Polygon') {
     return null;
   }
 
-  return feature.geometry.coordinates.flat();
+  return feature.geometry.coordinates;
 }
 
-function getPolygonCenter(coordinates: [number, number][]) {
-  const longitudes = coordinates.map(([longitude]) => longitude);
-  const latitudes = coordinates.map(([, latitude]) => latitude);
+function getMetersPerLongitudeDegree(latitude: number) {
+  const latitudeRadians = (latitude * Math.PI) / 180;
 
+  return METERS_PER_LATITUDE_DEGREE * Math.cos(latitudeRadians);
+}
+
+function getBoundsCenterLatitude(bounds: CoordinateBounds) {
+  return (bounds.north + bounds.south) / 2;
+}
+
+function getBoundsWidthMeters(bounds: CoordinateBounds) {
+  return (bounds.east - bounds.west) * getMetersPerLongitudeDegree(getBoundsCenterLatitude(bounds));
+}
+
+function getBoundsHeightMeters(bounds: CoordinateBounds) {
+  return (bounds.north - bounds.south) * METERS_PER_LATITUDE_DEGREE;
+}
+
+function getMeterCoordinate([longitude, latitude]: [number, number], bounds: CoordinateBounds) {
   return {
-    longitude: (Math.min(...longitudes) + Math.max(...longitudes)) / 2,
-    latitude: (Math.min(...latitudes) + Math.max(...latitudes)) / 2
+    x: (longitude - bounds.west) * getMetersPerLongitudeDegree(getBoundsCenterLatitude(bounds)),
+    y: (bounds.north - latitude) * METERS_PER_LATITUDE_DEGREE
   };
 }
 
-function getLongitudeOffsetDegrees(radiusMeters: number, latitude: number) {
-  const latitudeRadians = (latitude * Math.PI) / 180;
-  const metersPerLongitudeDegree = METERS_PER_LATITUDE_DEGREE * Math.cos(latitudeRadians);
+function tracePolygonRings(context: CanvasRenderingContext2D, rings: [number, number][][], bounds: CoordinateBounds) {
+  rings.forEach((ring) => {
+    ring.forEach((coordinate, index) => {
+      const meterCoordinate = getMeterCoordinate(coordinate, bounds);
 
-  return radiusMeters / metersPerLongitudeDegree;
-}
-
-function getDistanceMeters(
-  firstCoordinate: { longitude: number; latitude: number },
-  secondCoordinate: { longitude: number; latitude: number }
-) {
-  const averageLatitude = (firstCoordinate.latitude + secondCoordinate.latitude) / 2;
-  const latitudeMeters = (secondCoordinate.latitude - firstCoordinate.latitude) * METERS_PER_LATITUDE_DEGREE;
-  const longitudeMeters =
-    (secondCoordinate.longitude - firstCoordinate.longitude) *
-    METERS_PER_LATITUDE_DEGREE *
-    Math.cos((averageLatitude * Math.PI) / 180);
-
-  return Math.sqrt(latitudeMeters ** 2 + longitudeMeters ** 2);
-}
-
-function getApproximateFootprintRadiusMeters(coordinates: [number, number][]) {
-  const center = getPolygonCenter(coordinates);
-
-  return coordinates.reduce((maxDistance, [longitude, latitude]) => {
-    const latitudeMeters = (latitude - center.latitude) * METERS_PER_LATITUDE_DEGREE;
-    const longitudeMeters =
-      (longitude - center.longitude) *
-      METERS_PER_LATITUDE_DEGREE *
-      Math.cos((center.latitude * Math.PI) / 180);
-    const distance = Math.sqrt(latitudeMeters ** 2 + longitudeMeters ** 2);
-
-    return Math.max(maxDistance, distance);
-  }, 0);
-}
-
-function createApproximateCircleRing(
-  center: { longitude: number; latitude: number },
-  radiusMeters: number
-): [number, number][] {
-  const latitudeOffset = radiusMeters / METERS_PER_LATITUDE_DEGREE;
-  const longitudeOffset = getLongitudeOffsetDegrees(radiusMeters, center.latitude);
-  const ring = Array.from({ length: AVOID_ZONE_SEGMENTS }, (_, index): [number, number] => {
-    const angle = (index / AVOID_ZONE_SEGMENTS) * Math.PI * 2;
-
-    return [
-      center.longitude + Math.cos(angle) * longitudeOffset,
-      center.latitude + Math.sin(angle) * latitudeOffset
-    ];
-  });
-
-  return [...ring, ring[0]];
-}
-
-function createAvoidZoneCircles(buildingFeatures: MapFeature[], radiusMeters: number) {
-  return buildingFeatures.flatMap<AvoidZoneCircle>((feature) => {
-    const coordinates = getPolygonCoordinates(feature);
-
-    if (!coordinates) {
-      return [];
-    }
-
-    const center = getPolygonCenter(coordinates);
-    const footprintRadiusMeters = getApproximateFootprintRadiusMeters(coordinates);
-    const totalRadiusMeters = radiusMeters + footprintRadiusMeters;
-
-    return [
-      {
-        center,
-        radiusMeters: totalRadiusMeters,
-        ring: createApproximateCircleRing(center, totalRadiusMeters)
+      if (index === 0) {
+        context.moveTo(meterCoordinate.x, meterCoordinate.y);
+        return;
       }
-    ];
+
+      context.lineTo(meterCoordinate.x, meterCoordinate.y);
+    });
+
+    context.closePath();
   });
 }
 
-function circlesOverlap(firstCircle: AvoidZoneCircle, secondCircle: AvoidZoneCircle) {
-  return (
-    getDistanceMeters(firstCircle.center, secondCircle.center) <=
-    firstCircle.radiusMeters + secondCircle.radiusMeters
-  );
-}
+function drawBuildingPerimeterAvoidZone(
+  context: CanvasRenderingContext2D,
+  buildingFeatures: MapFeature[],
+  radiusMeters: number,
+  bounds: CoordinateBounds
+) {
+  const boundsWidthMeters = getBoundsWidthMeters(bounds);
+  const boundsHeightMeters = getBoundsHeightMeters(bounds);
 
-function groupOverlappingCircles(circles: AvoidZoneCircle[]) {
-  const groups: AvoidZoneCircle[][] = [];
+  if (boundsWidthMeters <= 0 || boundsHeightMeters <= 0) {
+    return;
+  }
 
-  circles.forEach((circle) => {
-    const matchingGroups = groups.filter((group) =>
-      group.some((groupCircle) => circlesOverlap(circle, groupCircle))
-    );
+  context.save();
+  context.scale(AVOID_ZONE_CANVAS_SIZE / boundsWidthMeters, AVOID_ZONE_CANVAS_SIZE / boundsHeightMeters);
+  context.fillStyle = '#f08c00';
+  context.strokeStyle = '#f08c00';
+  context.lineCap = 'round';
+  context.lineJoin = 'round';
+  context.lineWidth = radiusMeters * 2;
 
-    if (matchingGroups.length === 0) {
-      groups.push([circle]);
+  buildingFeatures.forEach((feature) => {
+    const rings = getPolygonRings(feature);
+
+    if (!rings) {
       return;
     }
 
-    const mergedGroup = [circle, ...matchingGroups.flat()];
-
-    matchingGroups.forEach((matchingGroup) => {
-      const matchingGroupIndex = groups.indexOf(matchingGroup);
-
-      if (matchingGroupIndex >= 0) {
-        groups.splice(matchingGroupIndex, 1);
-      }
-    });
-
-    groups.push(mergedGroup);
+    context.beginPath();
+    tracePolygonRings(context, rings, bounds);
+    context.fill('evenodd');
+    context.stroke();
   });
 
-  return groups;
+  context.restore();
 }
 
-function createCirclePolygon(circle: AvoidZoneCircle): Polygon {
-  return [circle.ring];
-}
+function drawFallbackPointAvoidZone(
+  context: CanvasRenderingContext2D,
+  buildingFeatures: MapFeature[],
+  radiusMeters: number,
+  bounds: CoordinateBounds
+) {
+  const boundsWidthMeters = getBoundsWidthMeters(bounds);
+  const boundsHeightMeters = getBoundsHeightMeters(bounds);
 
-function createUnionedPolygons(circleGroup: AvoidZoneCircle[]): MultiPolygon {
-  if (circleGroup.length === 0) {
-    return [];
+  if (boundsWidthMeters <= 0 || boundsHeightMeters <= 0) {
+    return;
   }
 
-  const [firstCircle, ...remainingCircles] = circleGroup;
+  context.save();
+  context.scale(AVOID_ZONE_CANVAS_SIZE / boundsWidthMeters, AVOID_ZONE_CANVAS_SIZE / boundsHeightMeters);
+  context.fillStyle = '#f08c00';
 
-  return union(createCirclePolygon(firstCircle), ...remainingCircles.map(createCirclePolygon));
+  buildingFeatures.forEach((feature) => {
+    if (feature.geometry.type !== 'Point') {
+      return;
+    }
+
+    const meterCoordinate = getMeterCoordinate(feature.geometry.coordinates, bounds);
+
+    context.beginPath();
+    context.arc(meterCoordinate.x, meterCoordinate.y, radiusMeters, 0, Math.PI * 2);
+    context.fill();
+  });
+
+  context.restore();
 }
 
-export function createApproximateAvoidZoneFeatures(buildingFeatures: MapFeature[], radiusMeters: number) {
-  const circles = createAvoidZoneCircles(buildingFeatures, radiusMeters);
-  const circleGroups = groupOverlappingCircles(circles);
+function drawFallbackLineAvoidZone(
+  context: CanvasRenderingContext2D,
+  buildingFeatures: MapFeature[],
+  radiusMeters: number,
+  bounds: CoordinateBounds
+) {
+  const boundsWidthMeters = getBoundsWidthMeters(bounds);
+  const boundsHeightMeters = getBoundsHeightMeters(bounds);
 
-  return circleGroups.flatMap<MapFeature>((circleGroup, groupIndex) => {
-    try {
-      return createUnionedPolygons(circleGroup).map((polygon, polygonIndex) => ({
-        id: `approximate-avoid-zone-cluster-${groupIndex + 1}-${polygonIndex + 1}`,
-        featureTypeId: buildingFeatureType.id,
-        geometry: {
-          type: 'Polygon',
-          coordinates: polygon
-        },
-        properties: {
-          buildingCount: circleGroup.length,
-          radiusMeters,
-          source: 'loaded-buildings'
-        }
-      }));
-    } catch (error) {
-      console.warn('Unable to merge avoid-zone group.', error);
-      return [];
+  if (boundsWidthMeters <= 0 || boundsHeightMeters <= 0) {
+    return;
+  }
+
+  context.save();
+  context.scale(AVOID_ZONE_CANVAS_SIZE / boundsWidthMeters, AVOID_ZONE_CANVAS_SIZE / boundsHeightMeters);
+  context.strokeStyle = '#f08c00';
+  context.lineCap = 'round';
+  context.lineJoin = 'round';
+  context.lineWidth = radiusMeters * 2;
+
+  buildingFeatures.forEach((feature) => {
+    if (feature.geometry.type !== 'LineString') {
+      return;
     }
+
+    context.beginPath();
+    feature.geometry.coordinates.forEach((coordinate, index) => {
+      const meterCoordinate = getMeterCoordinate(coordinate, bounds);
+
+      if (index === 0) {
+        context.moveTo(meterCoordinate.x, meterCoordinate.y);
+        return;
+      }
+
+      context.lineTo(meterCoordinate.x, meterCoordinate.y);
+    });
+    context.stroke();
   });
+
+  context.restore();
+}
+
+export function createAvoidZoneMaskCanvas(
+  buildingFeatures: MapFeature[],
+  radiusMeters: number,
+  bounds: CoordinateBounds
+) {
+  const canvas = document.createElement('canvas');
+  canvas.width = AVOID_ZONE_CANVAS_SIZE;
+  canvas.height = AVOID_ZONE_CANVAS_SIZE;
+
+  const context = canvas.getContext('2d');
+
+  if (!context) {
+    return canvas;
+  }
+
+  context.clearRect(0, 0, canvas.width, canvas.height);
+  drawBuildingPerimeterAvoidZone(context, buildingFeatures, radiusMeters, bounds);
+  drawFallbackLineAvoidZone(context, buildingFeatures, radiusMeters, bounds);
+  drawFallbackPointAvoidZone(context, buildingFeatures, radiusMeters, bounds);
+
+  return canvas;
 }
