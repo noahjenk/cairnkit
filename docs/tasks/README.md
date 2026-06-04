@@ -138,6 +138,13 @@ After those inserted tasks, regular task numbering should continue:
 037-[short-task-name].md
 038-[short-task-name].md
 039-[short-task-name].md
+040-[short-task-name].md
+041-[short-task-name].md
+042-[short-task-name].md
+043-[short-task-name].md
+044-[short-task-name].md
+045-[short-task-name].md
+046-[short-task-name].md
 ```
 
 Task numbers should never be reused.
@@ -204,6 +211,13 @@ After the initial task briefs are complete, the next expected tasks should conti
 38. Highlight selected saved place search result. Done.
 39. Select saved place from workspace list. Done.
 40. Add clear selected saved place action.
+41. Define UI layout system tokens.
+42. Rework map workspace layout regions.
+43. Redesign workspace information architecture.
+44. Consolidate search and saved-place selection UI.
+45. Simplify Rural Area Finder panel layout.
+46. Improve responsive workspace behavior.
+47. UI polish pass.
 
 This list is the later implementation sequence now that the initial task briefs are complete.
 
