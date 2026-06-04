@@ -22,11 +22,11 @@ Those files should only be updated when their durable guidance changes, not afte
 
 ## Current Project Status
 
-The repo has completed Tasks 001 through 036, plus inserted Tasks 8.5, 8.6, and 10.5.
+The repo has completed Tasks 001 through 038, plus inserted Tasks 8.5, 8.6, and 10.5.
 
-The current next implementation task is Task 037: `037-highlight-selected-saved-place-search-result.md`.
+The current next implementation task is Task 039: `039-add-clear-selected-saved-place-action.md`.
 
-Copilot must not skip ahead to later refinement work before highlighting selected saved-place search results.
+Copilot must not skip ahead to later refinement work before adding a clear selected saved-place action.
 
 ## Update Rules
 
@@ -136,6 +136,8 @@ After those inserted tasks, regular task numbering should continue:
 035-[short-task-name].md
 036-[short-task-name].md
 037-[short-task-name].md
+038-[short-task-name].md
+039-[short-task-name].md
 ```
 
 Task numbers should never be reused.
@@ -199,7 +201,9 @@ After the initial task briefs are complete, the next expected tasks should conti
 35. Approximate avoid zones from building perimeters. Done.
 36. Make status indicator more useful. Done.
 37. Make search box useful. Done.
-38. Highlight selected saved place search result.
+38. Highlight selected saved place search result. Done.
+39. Select saved place from workspace list. Done.
+40. Add clear selected saved place action.
 
 This list is the later implementation sequence now that the initial task briefs are complete.
 
@@ -216,7 +220,7 @@ It should first produce a proposed next task brief and explain why that task is 
 The current next implementation task is:
 
 ```txt
-037-highlight-selected-saved-place-search-result.md
+039-add-clear-selected-saved-place-action.md
 ```
 
-Copilot must start with Task 037 and keep it focused on highlighting selected saved-place search results.
+Copilot must start with Task 039 and keep it focused on adding a clear selected saved-place action.

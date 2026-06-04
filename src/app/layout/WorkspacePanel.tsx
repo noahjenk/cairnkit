@@ -6,16 +6,20 @@ import { Panel, Toggle } from '../../ui';
 
 type WorkspacePanelProps = {
   onPlaceSaved: () => void;
+  onSelectSavedPlace: (savedPlace: SavedPlace) => void;
   temporaryPinCoordinates: SavedPlaceCoordinates | null;
   onClearTemporaryPin: () => void;
   savedPlaces: SavedPlace[];
+  selectedSavedPlaceId: string | null;
 };
 
 export function WorkspacePanel({
   onPlaceSaved,
+  onSelectSavedPlace,
   temporaryPinCoordinates,
   onClearTemporaryPin,
-  savedPlaces
+  savedPlaces,
+  selectedSavedPlaceId
 }: WorkspacePanelProps) {
   const { isLayerVisible, layers, toggleLayerVisibility } = useLayers();
   const { isToolEnabled, toggleTool, tools } = useTools();
@@ -100,7 +104,11 @@ export function WorkspacePanel({
             ) : (
               <p>Click the map to choose a place to save.</p>
             )}
-            <SavedPlacesPanel savedPlaces={savedPlaces} />
+            <SavedPlacesPanel
+              onSelectSavedPlace={onSelectSavedPlace}
+              savedPlaces={savedPlaces}
+              selectedSavedPlaceId={selectedSavedPlaceId}
+            />
           </section>
         </Panel>
       ) : null}

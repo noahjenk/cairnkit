@@ -177,7 +177,7 @@ function getStatusIndicatorModel(
 function MapWorkspace() {
   const { isToolEnabled } = useTools();
   const [temporaryPinCoordinates, setTemporaryPinCoordinates] = useState<SavedPlaceCoordinates | null>(null);
-  const [focusedSavedPlaceCoordinates, setFocusedSavedPlaceCoordinates] = useState<SavedPlaceCoordinates | null>(null);
+  const [selectedSavedPlaceId, setSelectedSavedPlaceId] = useState<string | null>(null);
   const [savedPlaces, setSavedPlaces] = useState<SavedPlace[]>(listSavedPlaces);
   const [buildingLoadStatus, setBuildingLoadStatus] = useState<BuildingLoadStatus>({ state: 'idle' });
   const [avoidZoneProcessingStatus, setAvoidZoneProcessingStatus] = useState<AvoidZoneProcessingStatus>({
@@ -190,6 +190,8 @@ function MapWorkspace() {
     avoidZoneProcessingStatus,
     isRuralAreaFinderEnabled
   );
+  const focusedSavedPlaceCoordinates =
+    savedPlaces.find((savedPlace) => savedPlace.id === selectedSavedPlaceId)?.coordinates ?? null;
 
   const handleBuildingLoadStatusChange = useCallback((status: BuildingLoadStatus) => {
     setBuildingLoadStatus(status);
@@ -213,18 +215,22 @@ function MapWorkspace() {
         onMapClick={setTemporaryPinCoordinates}
         focusedSavedPlaceCoordinates={focusedSavedPlaceCoordinates}
         savedPlaces={savedPlaces}
+        selectedSavedPlaceId={selectedSavedPlaceId}
         temporaryPinCoordinates={temporaryPinCoordinates}
       />
 
       <FloatingSearchBox
-        onSelectSavedPlace={(savedPlace) => setFocusedSavedPlaceCoordinates(savedPlace.coordinates)}
+        onSelectSavedPlace={(savedPlace) => setSelectedSavedPlaceId(savedPlace.id)}
         savedPlaces={savedPlaces}
+        selectedSavedPlaceId={selectedSavedPlaceId}
       />
       <WorkspacePanel
         onPlaceSaved={handlePlaceSaved}
+        onSelectSavedPlace={(savedPlace) => setSelectedSavedPlaceId(savedPlace.id)}
         temporaryPinCoordinates={temporaryPinCoordinates}
         onClearTemporaryPin={() => setTemporaryPinCoordinates(null)}
         savedPlaces={savedPlaces}
+        selectedSavedPlaceId={selectedSavedPlaceId}
       />
       <StatusIndicator
         canRefresh={statusIndicator.canRefresh}

@@ -19,6 +19,7 @@ type MapViewProps = {
   onBuildingLoadStatusChange: (status: BuildingLoadStatus) => void;
   onMapClick: (coordinates: SavedPlaceCoordinates) => void;
   savedPlaces: SavedPlace[];
+  selectedSavedPlaceId: string | null;
   temporaryPinCoordinates: SavedPlaceCoordinates | null;
 };
 
@@ -29,6 +30,7 @@ export function MapView({
   onBuildingLoadStatusChange,
   onMapClick,
   savedPlaces,
+  selectedSavedPlaceId,
   temporaryPinCoordinates
 }: MapViewProps) {
   const { isToolEnabled } = useTools();
@@ -80,6 +82,7 @@ export function MapView({
     onBuildingLoadStatusChange,
     onMapClick,
     savedPlaces,
+    selectedSavedPlaceId,
     shouldLoadBuildingFeatures: isRuralAreaFinderEnabled,
     showLoadedBuildingsDebugLayer: isRuralAreaFinderEnabled && showLoadedBuildings,
     showRuralAreaFinderAvoidZoneLayer: isRuralAreaFinderEnabled,

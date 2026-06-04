@@ -36,6 +36,7 @@ type UseMapInstanceOptions = {
   ruralAreaFinderOpacity: number;
   ruralAreaFinderRadiusMeters: number;
   savedPlaces: SavedPlace[];
+  selectedSavedPlaceId: string | null;
   shouldLoadBuildingFeatures: boolean;
   showLoadedBuildingsDebugLayer: boolean;
   showRuralAreaFinderAvoidZoneLayer: boolean;
@@ -224,6 +225,7 @@ export function useMapInstance({
   ruralAreaFinderOpacity,
   ruralAreaFinderRadiusMeters,
   savedPlaces,
+  selectedSavedPlaceId,
   shouldLoadBuildingFeatures,
   showLoadedBuildingsDebugLayer,
   showRuralAreaFinderAvoidZoneLayer,
@@ -575,12 +577,17 @@ export function useMapInstance({
     savedPlaceMarkersRef.current.forEach((marker) => marker.remove());
     savedPlaceMarkersRef.current = savedPlaces.map((savedPlace) =>
       new maplibregl.Marker({
-        element: createMarkerElement('map-marker map-marker--saved', savedPlace.name)
+        element: createMarkerElement(
+          `map-marker map-marker--saved ${
+            savedPlace.id === selectedSavedPlaceId ? 'map-marker--selected' : ''
+          }`.trim(),
+          savedPlace.name
+        )
       })
         .setLngLat([savedPlace.coordinates.longitude, savedPlace.coordinates.latitude])
         .addTo(map)
     );
-  }, [savedPlaces]);
+  }, [savedPlaces, selectedSavedPlaceId]);
 
   useEffect(() => {
     const map = mapRef.current;

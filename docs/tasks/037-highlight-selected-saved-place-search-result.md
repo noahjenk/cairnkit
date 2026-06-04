@@ -47,10 +47,10 @@ This task should not include:
 
 ## Acceptance criteria
 
-- [ ] Selecting a search result creates a visible selected state.
-- [ ] The map still pans to the selected saved place.
-- [ ] The selected state remains subtle and readable.
-- [ ] App still builds.
+- [x] Selecting a search result creates a visible selected state.
+- [x] The map still pans to the selected saved place.
+- [x] The selected state remains subtle and readable.
+- [x] App still builds.
 
 ## Testing instructions
 
@@ -61,3 +61,7 @@ npm run build
 ```
 
 Then search for a saved place and verify the selected result is visibly indicated.
+
+## Completion note
+
+Completed on 2026-06-04. Search selection now tracks the selected saved-place id, highlights matching search results and saved-place list items, and gives the selected map marker a subtle emphasized style while preserving the existing pan-to-place behavior.

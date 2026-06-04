@@ -5,13 +5,14 @@ import { TextInput } from '../../ui';
 type FloatingSearchBoxProps = {
   onSelectSavedPlace: (savedPlace: SavedPlace) => void;
   savedPlaces: SavedPlace[];
+  selectedSavedPlaceId: string | null;
 };
 
 function getSearchableText(savedPlace: SavedPlace) {
   return `${savedPlace.name} ${savedPlace.notes}`.toLowerCase();
 }
 
-export function FloatingSearchBox({ onSelectSavedPlace, savedPlaces }: FloatingSearchBoxProps) {
+export function FloatingSearchBox({ onSelectSavedPlace, savedPlaces, selectedSavedPlaceId }: FloatingSearchBoxProps) {
   const [query, setQuery] = useState('');
   const trimmedQuery = query.trim();
   const matchingSavedPlaces = useMemo(() => {
@@ -62,7 +63,9 @@ export function FloatingSearchBox({ onSelectSavedPlace, savedPlaces }: FloatingS
           <div className="floating-search__result-list">
             {matchingSavedPlaces.map((savedPlace) => (
               <button
-                className="floating-search__result"
+                className={`floating-search__result ${
+                  savedPlace.id === selectedSavedPlaceId ? 'floating-search__result--selected' : ''
+                }`.trim()}
                 key={savedPlace.id}
                 onClick={() => onSelectSavedPlace(savedPlace)}
                 type="button"
