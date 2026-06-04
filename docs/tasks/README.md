@@ -22,7 +22,7 @@ Those files should only be updated when their durable guidance changes, not afte
 
 ## Current Project Status
 
-The repo has completed Tasks 001 through 024.7, plus inserted Tasks 8.5, 8.6, and 10.5.
+The repo has completed Tasks 001 through 024.9, plus inserted Tasks 8.5, 8.6, and 10.5.
 
 The current next implementation task is Task 025: `025-add-rural-area-finder-data-status.md`.
 
@@ -120,6 +120,8 @@ After those inserted tasks, regular task numbering should continue:
 024.5-[short-task-name].md
 024.6-[short-task-name].md
 024.7-[short-task-name].md
+024.8-[short-task-name].md
+024.9-[short-task-name].md
 025-[short-task-name].md
 ```
 
@@ -169,7 +171,9 @@ After the initial task briefs are complete, the next expected tasks should conti
 20. Replace mock buildings debug layer with loaded buildings debug layer. Done.
 21. Replace radius slider with number input. Done.
 22. Merge avoid-zone shapes. Done.
-23. Add Rural Area Finder data status.
+23. Use polygon union for avoid zones. Done.
+24. Stabilize avoid-zone union performance. Done.
+25. Add Rural Area Finder data status.
 
 This list is the later implementation sequence now that the initial task briefs are complete.
 

@@ -1,8 +1,11 @@
+import { union, type MultiPolygon, type Polygon } from 'polygon-clipping';
 import type { MapFeature } from '../../dataSources';
 import { buildingFeatureType } from '../../featureTypes';
 
 const METERS_PER_LATITUDE_DEGREE = 111_320;
-const AVOID_ZONE_SEGMENTS = 32;
+const AVOID_ZONE_SEGMENTS = 20;
+const MAX_AVOID_ZONE_SOURCE_FEATURES = 500;
+const MAX_UNION_GROUP_CIRCLES = 120;
 
 type AvoidZoneCircle = {
   center: {
@@ -11,7 +14,6 @@ type AvoidZoneCircle = {
   };
   radiusMeters: number;
   ring: [number, number][];
-  sourceBuildingId: string;
 };
 
 function getPolygonCoordinates(feature: MapFeature) {
@@ -102,8 +104,7 @@ function createAvoidZoneCircles(buildingFeatures: MapFeature[], radiusMeters: nu
       {
         center,
         radiusMeters: totalRadiusMeters,
-        ring: createApproximateCircleRing(center, totalRadiusMeters),
-        sourceBuildingId: feature.id
+        ring: createApproximateCircleRing(center, totalRadiusMeters)
       }
     ];
   });
@@ -145,83 +146,50 @@ function groupOverlappingCircles(circles: AvoidZoneCircle[]) {
   return groups;
 }
 
-function getCrossProduct(
-  origin: [number, number],
-  firstCoordinate: [number, number],
-  secondCoordinate: [number, number]
-) {
-  return (
-    (firstCoordinate[0] - origin[0]) * (secondCoordinate[1] - origin[1]) -
-    (firstCoordinate[1] - origin[1]) * (secondCoordinate[0] - origin[0])
-  );
+function createCirclePolygon(circle: AvoidZoneCircle): Polygon {
+  return [circle.ring];
 }
 
-function createConvexHullRing(coordinates: [number, number][]) {
-  const uniqueCoordinates = Array.from(
-    new Map(coordinates.map((coordinate) => [`${coordinate[0]},${coordinate[1]}`, coordinate])).values()
-  ).sort((firstCoordinate, secondCoordinate) => {
-    if (firstCoordinate[0] === secondCoordinate[0]) {
-      return firstCoordinate[1] - secondCoordinate[1];
-    }
-
-    return firstCoordinate[0] - secondCoordinate[0];
-  });
-
-  if (uniqueCoordinates.length <= 3) {
-    return [...uniqueCoordinates, uniqueCoordinates[0]];
+function createUnionedPolygons(circleGroup: AvoidZoneCircle[]): MultiPolygon {
+  if (circleGroup.length === 0) {
+    return [];
   }
 
-  const lowerHull: [number, number][] = [];
-  uniqueCoordinates.forEach((coordinate) => {
-    while (
-      lowerHull.length >= 2 &&
-      getCrossProduct(lowerHull[lowerHull.length - 2], lowerHull[lowerHull.length - 1], coordinate) <= 0
-    ) {
-      lowerHull.pop();
-    }
+  if (circleGroup.length > MAX_UNION_GROUP_CIRCLES) {
+    return [];
+  }
 
-    lowerHull.push(coordinate);
-  });
+  const [firstCircle, ...remainingCircles] = circleGroup;
 
-  const upperHull: [number, number][] = [];
-  [...uniqueCoordinates].reverse().forEach((coordinate) => {
-    while (
-      upperHull.length >= 2 &&
-      getCrossProduct(upperHull[upperHull.length - 2], upperHull[upperHull.length - 1], coordinate) <= 0
-    ) {
-      upperHull.pop();
-    }
-
-    upperHull.push(coordinate);
-  });
-
-  const hull = [...lowerHull.slice(0, -1), ...upperHull.slice(0, -1)];
-
-  return [...hull, hull[0]];
+  return union(createCirclePolygon(firstCircle), ...remainingCircles.map(createCirclePolygon));
 }
 
 export function createApproximateAvoidZoneFeatures(buildingFeatures: MapFeature[], radiusMeters: number) {
+  if (buildingFeatures.length > MAX_AVOID_ZONE_SOURCE_FEATURES) {
+    return [];
+  }
+
   const circles = createAvoidZoneCircles(buildingFeatures, radiusMeters);
   const circleGroups = groupOverlappingCircles(circles);
 
-  return circleGroups.map<MapFeature>((circleGroup, index) => {
-    const ring =
-      circleGroup.length === 1
-        ? circleGroup[0].ring
-        : createConvexHullRing(circleGroup.flatMap((circle) => circle.ring));
-
-    return {
-      id: `approximate-avoid-zone-cluster-${index + 1}`,
-      featureTypeId: buildingFeatureType.id,
-      geometry: {
-        type: 'Polygon',
-        coordinates: [ring]
-      },
-      properties: {
-        buildingCount: circleGroup.length,
-        radiusMeters,
-        source: 'loaded-buildings'
-      }
-    };
+  return circleGroups.flatMap<MapFeature>((circleGroup, groupIndex) => {
+    try {
+      return createUnionedPolygons(circleGroup).map((polygon, polygonIndex) => ({
+        id: `approximate-avoid-zone-cluster-${groupIndex + 1}-${polygonIndex + 1}`,
+        featureTypeId: buildingFeatureType.id,
+        geometry: {
+          type: 'Polygon',
+          coordinates: polygon
+        },
+        properties: {
+          buildingCount: circleGroup.length,
+          radiusMeters,
+          source: 'loaded-buildings'
+        }
+      }));
+    } catch (error) {
+      console.warn('Unable to merge avoid-zone group.', error);
+      return [];
+    }
   });
 }

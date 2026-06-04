@@ -88,4 +88,16 @@ Reason: this reduces repeated Overpass requests during early testing without add
 
 Avoid zones are currently generated as approximate grouped polygons around source buildings.
 
-Reason: this gives visible radius-driven output and avoids stacked shading without adding a GIS dependency or implementing precise dissolved buffers too early. More accurate GIS geometry can come later as a focused refinement.
+Reason: this gives visible radius-driven output and avoids stacked shading without implementing precise dissolved buffers or backend GIS processing too early. More accurate GIS geometry can come later as a focused refinement.
+
+## Decision 016: Use polygon union for overlapping avoid-zone circles
+
+Rural Area Finder uses `polygon-clipping` to union overlapping approximate avoid-zone circles.
+
+Reason: convex hulls did not match the intended shape. A focused polygon union dependency produces combined shaded areas that follow the overlapping circle outlines while keeping the frontend-only MVP architecture.
+
+## Decision 017: Guard expensive avoid-zone union work
+
+Rural Area Finder skips avoid-zone output for very dense building sets or very large overlap groups.
+
+Reason: polygon union runs in the browser during the frontend-only MVP. It is better for dense areas to show no avoid-zone output temporarily than to crash the app. A later task can move heavy geometry to a worker, add progressive processing, or narrow the loaded feature set.

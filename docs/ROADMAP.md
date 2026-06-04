@@ -69,7 +69,7 @@ Includes:
 6. Tool-owned avoid-zone visibility.
 7. Status updates.
 
-Durable status: implemented with loaded building features. The current output groups overlapping avoid circles into approximate hull polygons, not a precise dissolved GIS buffer.
+Durable status: implemented with loaded building features. The current output uses polygon union to merge overlapping approximate avoid circles.
 
 ## Phase 4: Saved places MVP
 

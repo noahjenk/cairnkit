@@ -153,7 +153,7 @@ The first real tool is Rural Area Finder.
 
 Future tools should be added through the tool registry rather than by rewriting the app shell.
 
-Rural Area Finder currently has an enabled state, radius setting, persisted radius value, panel UI, and an approximate merged avoid-zone output. Its avoid-zone visibility is controlled by the Rural Area Finder toggle and radius, not by the generic layer list.
+Rural Area Finder currently has an enabled state, radius setting, persisted radius value, panel UI, and a unioned approximate avoid-zone output. Its avoid-zone visibility is controlled by the Rural Area Finder toggle and radius, not by the generic layer list.
 
 ## Layer system
 
