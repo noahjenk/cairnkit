@@ -44,10 +44,14 @@ This task should not include:
 
 ## Acceptance criteria
 
-- [ ] UI spacing and typography feel consistent.
-- [ ] Focus and hover states are clear.
-- [ ] Selected states are readable and restrained.
-- [ ] App still builds.
+- [x] UI spacing and typography feel consistent.
+- [x] Focus and hover states are clear.
+- [x] Selected states are readable and restrained.
+- [x] App still builds.
+
+## Completion note
+
+Completed. Added a shared focus shadow token, consistent hover/focus transitions for workspace controls, search clear actions, saved-place options, buttons, inputs, and toggles. Selected saved-place rows now use a restrained inset accent while preserving visible keyboard focus.
 
 ## Testing instructions
 

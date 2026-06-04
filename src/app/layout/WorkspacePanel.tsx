@@ -43,11 +43,20 @@ export function WorkspacePanel({
       </button>
 
       {!isCollapsed ? (
-        <Panel title="Workspace" summary="Placeholders only for the map-first layout.">
-          {workspaceTools.length > 0 ? (
-            <section className="workspace-section">
-              <h2>Active Tools</h2>
-              <div className="tool-list">
+        <Panel title="Workspace">
+          <section className="workspace-section workspace-section--primary">
+            <div className="workspace-section__heading">
+              <h2>Tools</h2>
+              <p>{isToolEnabled(ruralAreaFinderTool.id) ? 'Rural Area Finder active' : 'Ready'}</p>
+            </div>
+
+            <RuralAreaFinderPanel
+              isEnabled={isToolEnabled(ruralAreaFinderTool.id)}
+              onToggleEnabled={() => toggleTool(ruralAreaFinderTool.id)}
+            />
+
+            {workspaceTools.length > 0 ? (
+              <div className="tool-list" aria-label="Additional tools">
                 {workspaceTools.map((tool) => (
                   <div className="tool-list__item" key={tool.id}>
                     <div>
@@ -62,17 +71,36 @@ export function WorkspacePanel({
                   </div>
                 ))}
               </div>
-            </section>
-          ) : null}
-
-          <RuralAreaFinderPanel
-            isEnabled={isToolEnabled(ruralAreaFinderTool.id)}
-            onToggleEnabled={() => toggleTool(ruralAreaFinderTool.id)}
-          />
+            ) : null}
+          </section>
 
           <section className="workspace-section">
-            <h2>Layers</h2>
-            {layers.length > 0 ? (
+            <div className="workspace-section__heading">
+              <h2>Places</h2>
+              <p>{savedPlaces.length.toLocaleString()} saved</p>
+            </div>
+            {temporaryPinCoordinates ? (
+              <TemporaryPinCard
+                coordinates={temporaryPinCoordinates}
+                onCancel={onClearTemporaryPin}
+                onSaved={onPlaceSaved}
+              />
+            ) : (
+              <p className="workspace-empty-state">No place selected.</p>
+            )}
+            <SavedPlacesPanel
+              onSelectSavedPlace={onSelectSavedPlace}
+              savedPlaces={savedPlaces}
+              selectedSavedPlaceId={selectedSavedPlaceId}
+            />
+          </section>
+
+          {layers.length > 0 ? (
+            <section className="workspace-section">
+              <div className="workspace-section__heading">
+                <h2>Map Display</h2>
+                <p>{layers.length.toLocaleString()} optional</p>
+              </div>
               <div className="tool-list">
                 {layers.map((layer) => (
                   <div className="tool-list__item" key={layer.id}>
@@ -88,28 +116,8 @@ export function WorkspacePanel({
                   </div>
                 ))}
               </div>
-            ) : (
-              <p>No optional layers available.</p>
-            )}
-          </section>
-
-          <section className="workspace-section">
-            <h2>Saved Places</h2>
-            {temporaryPinCoordinates ? (
-              <TemporaryPinCard
-                coordinates={temporaryPinCoordinates}
-                onCancel={onClearTemporaryPin}
-                onSaved={onPlaceSaved}
-              />
-            ) : (
-              <p>Click the map to choose a place to save.</p>
-            )}
-            <SavedPlacesPanel
-              onSelectSavedPlace={onSelectSavedPlace}
-              savedPlaces={savedPlaces}
-              selectedSavedPlaceId={selectedSavedPlaceId}
-            />
-          </section>
+            </section>
+          ) : null}
         </Panel>
       ) : null}
     </aside>

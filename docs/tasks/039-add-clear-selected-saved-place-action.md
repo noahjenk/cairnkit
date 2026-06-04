@@ -45,10 +45,10 @@ This task should not include:
 
 ## Acceptance criteria
 
-- [ ] A selected saved place can be cleared.
-- [ ] Clearing removes search, list, and marker highlights.
-- [ ] Clearing does not delete or edit saved places.
-- [ ] App still builds.
+- [x] A selected saved place can be cleared.
+- [x] Clearing removes search, list, and marker highlights.
+- [x] Clearing does not delete or edit saved places.
+- [x] App still builds.
 
 ## Testing instructions
 
@@ -59,3 +59,7 @@ npm run build
 ```
 
 Then select a saved place and clear the selection.
+
+## Completion note
+
+Completed on 2026-06-04. The floating search status strip now shows the selected saved place and a compact clear action that resets selected saved-place state without modifying saved data.

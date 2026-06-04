@@ -46,10 +46,14 @@ This task should not include:
 
 ## Acceptance criteria
 
-- [ ] Search results and saved-place list items feel related.
-- [ ] Selected saved-place state is clear across surfaces.
-- [ ] Clear-selection action remains discoverable.
-- [ ] App still builds.
+- [x] Search results and saved-place list items feel related.
+- [x] Selected saved-place state is clear across surfaces.
+- [x] Clear-selection action remains discoverable.
+- [x] App still builds.
+
+## Completion note
+
+Completed. Search results and saved-place list entries now share a common saved-place option markup and selected style. The selected status text is clearer, the clear-selection action remains beside the selected place state, and the compact search layout is preserved.
 
 ## Testing instructions
 

@@ -47,10 +47,14 @@ This task should not include:
 
 ## Acceptance criteria
 
-- [ ] Search and workspace cannot overlap.
-- [ ] Status stays clear of search and workspace.
-- [ ] Layout remains map-first.
-- [ ] App still builds.
+- [x] Search and workspace cannot overlap.
+- [x] Status stays clear of search and workspace.
+- [x] Layout remains map-first.
+- [x] App still builds.
+
+## Completion note
+
+Completed. Added named map UI regions for the primary left-side controls and page status controls. Search and workspace now share a single stacked region, with the workspace filling remaining height instead of relying on a fixed top offset. The status indicator now lives in its own region and moves to the bottom on narrow viewports.
 
 ## Testing instructions
 

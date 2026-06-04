@@ -219,27 +219,32 @@ function MapWorkspace() {
         temporaryPinCoordinates={temporaryPinCoordinates}
       />
 
-      <FloatingSearchBox
-        onSelectSavedPlace={(savedPlace) => setSelectedSavedPlaceId(savedPlace.id)}
-        savedPlaces={savedPlaces}
-        selectedSavedPlaceId={selectedSavedPlaceId}
-      />
-      <WorkspacePanel
-        onPlaceSaved={handlePlaceSaved}
-        onSelectSavedPlace={(savedPlace) => setSelectedSavedPlaceId(savedPlace.id)}
-        temporaryPinCoordinates={temporaryPinCoordinates}
-        onClearTemporaryPin={() => setTemporaryPinCoordinates(null)}
-        savedPlaces={savedPlaces}
-        selectedSavedPlaceId={selectedSavedPlaceId}
-      />
-      <StatusIndicator
-        canRefresh={statusIndicator.canRefresh}
-        detail={statusIndicator.detail}
-        isLoading={statusIndicator.isLoading}
-        message={statusIndicator.message}
-        onRefresh={() => setBuildingRefreshToken((currentToken) => currentToken + 1)}
-        tone={statusIndicator.tone}
-      />
+      <div className="map-ui-region map-ui-region--primary" aria-label="Search and workspace controls">
+        <FloatingSearchBox
+          onClearSelectedSavedPlace={() => setSelectedSavedPlaceId(null)}
+          onSelectSavedPlace={(savedPlace) => setSelectedSavedPlaceId(savedPlace.id)}
+          savedPlaces={savedPlaces}
+          selectedSavedPlaceId={selectedSavedPlaceId}
+        />
+        <WorkspacePanel
+          onPlaceSaved={handlePlaceSaved}
+          onSelectSavedPlace={(savedPlace) => setSelectedSavedPlaceId(savedPlace.id)}
+          temporaryPinCoordinates={temporaryPinCoordinates}
+          onClearTemporaryPin={() => setTemporaryPinCoordinates(null)}
+          savedPlaces={savedPlaces}
+          selectedSavedPlaceId={selectedSavedPlaceId}
+        />
+      </div>
+      <div className="map-ui-region map-ui-region--status" aria-label="Map status controls">
+        <StatusIndicator
+          canRefresh={statusIndicator.canRefresh}
+          detail={statusIndicator.detail}
+          isLoading={statusIndicator.isLoading}
+          message={statusIndicator.message}
+          onRefresh={() => setBuildingRefreshToken((currentToken) => currentToken + 1)}
+          tone={statusIndicator.tone}
+        />
+      </div>
     </section>
   );
 }

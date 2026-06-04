@@ -43,10 +43,14 @@ This task should not include:
 
 ## Acceptance criteria
 
-- [ ] Core layout tokens exist.
-- [ ] Main shell surfaces use the tokens where practical.
-- [ ] App layout still behaves like before.
-- [ ] App still builds.
+- [x] Core layout tokens exist.
+- [x] Main shell surfaces use the tokens where practical.
+- [x] App layout still behaves like before.
+- [x] App still builds.
+
+## Completion note
+
+Completed. Added CairnKit CSS custom properties for spacing, panel sizing, colors, shadows, radii, controls, and z-index layers. Applied them to the top bar, floating search, workspace panel, status indicator, map markers, tool surfaces, and shared UI controls without changing behavior.
 
 ## Testing instructions
 

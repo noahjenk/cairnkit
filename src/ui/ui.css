@@ -1,12 +1,16 @@
 .ui-button {
   min-height: 36px;
-  padding: 0 12px;
-  border: 1px solid #bcccdc;
-  border-radius: 8px;
+  padding: 0 var(--ck-space-5, 12px);
+  border: 1px solid var(--ck-color-border-strong, #bcccdc);
+  border-radius: var(--ck-radius-control, 8px);
   font: inherit;
   font-size: 0.875rem;
   font-weight: 600;
   cursor: pointer;
+  transition:
+    background 0.16s ease,
+    border-color 0.16s ease,
+    box-shadow 0.16s ease;
 }
 
 .ui-button:disabled {
@@ -14,47 +18,57 @@
   opacity: 0.62;
 }
 
+.ui-button:not(:disabled):hover {
+  border-color: var(--ck-color-focus, #486581);
+}
+
+.ui-button:focus-visible {
+  outline: 2px solid var(--ck-color-focus, #486581);
+  outline-offset: 2px;
+  box-shadow: var(--ck-shadow-focus, 0 0 0 3px rgb(72 101 129 / 0.18));
+}
+
 .ui-button--primary {
-  border-color: #2f855a;
-  background: #2f855a;
-  color: #ffffff;
+  border-color: var(--ck-color-accent, #2f855a);
+  background: var(--ck-color-accent, #2f855a);
+  color: var(--ck-color-surface, #ffffff);
 }
 
 .ui-button--secondary {
-  background: #ffffff;
-  color: #243b53;
+  background: var(--ck-color-surface, #ffffff);
+  color: var(--ck-color-text, #243b53);
 }
 
 .ui-panel {
   display: grid;
-  gap: 12px;
+  gap: var(--ck-space-5, 12px);
 }
 
 .ui-panel__header {
   display: grid;
-  gap: 4px;
+  gap: var(--ck-space-1, 4px);
 }
 
 .ui-panel__title {
   margin: 0;
-  color: #102a43;
+  color: var(--ck-color-text-strong, #102a43);
   font-size: 1rem;
 }
 
 .ui-panel__summary {
   margin: 0;
-  color: #52606d;
+  color: var(--ck-color-text-muted, #52606d);
   font-size: 0.875rem;
 }
 
 .ui-field {
   display: grid;
-  gap: 6px;
+  gap: var(--ck-space-2, 6px);
 }
 
 .ui-field__label,
 .ui-toggle__label {
-  color: #243b53;
+  color: var(--ck-color-text, #243b53);
   font-size: 0.875rem;
   font-weight: 600;
 }
@@ -62,38 +76,48 @@
 .ui-text-input,
 .ui-text-area {
   width: 100%;
-  border: 1px solid #d9e2ec;
-  border-radius: 8px;
-  background: #ffffff;
-  color: #243b53;
+  border: 1px solid var(--ck-color-border, #d9e2ec);
+  border-radius: var(--ck-radius-control, 8px);
+  background: var(--ck-color-surface, #ffffff);
+  color: var(--ck-color-text, #243b53);
   font: inherit;
+  transition:
+    border-color 0.16s ease,
+    box-shadow 0.16s ease;
+}
+
+.ui-text-input:focus,
+.ui-text-area:focus {
+  border-color: var(--ck-color-focus, #486581);
+  outline: none;
+  box-shadow: var(--ck-shadow-focus, 0 0 0 3px rgb(72 101 129 / 0.18));
 }
 
 .ui-text-input {
-  height: 44px;
-  padding: 0 14px;
+  height: var(--ck-control-size-md, 44px);
+  padding: 0 var(--ck-space-6, 14px);
 }
 
 .ui-text-area {
   min-height: 96px;
-  padding: 10px 12px;
+  padding: var(--ck-space-4, 10px) var(--ck-space-5, 12px);
   resize: vertical;
 }
 
 .ui-text-input::placeholder,
 .ui-text-area::placeholder {
-  color: #829ab1;
+  color: var(--ck-color-text-subtle, #829ab1);
 }
 
 .ui-slider {
   width: 100%;
-  accent-color: #2f855a;
+  accent-color: var(--ck-color-accent, #2f855a);
 }
 
 .ui-toggle {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: var(--ck-space-4, 10px);
 }
 
 .ui-toggle__input {
@@ -109,21 +133,23 @@
   align-items: center;
   padding: 2px;
   border-radius: 999px;
-  background: #bcccdc;
-  transition: background 0.16s ease;
+  background: var(--ck-color-border-strong, #bcccdc);
+  transition:
+    background 0.16s ease,
+    box-shadow 0.16s ease;
 }
 
 .ui-toggle__thumb {
   width: 18px;
   height: 18px;
   border-radius: 999px;
-  background: #ffffff;
+  background: var(--ck-color-surface, #ffffff);
   box-shadow: 0 1px 2px rgb(15 23 42 / 0.18);
   transition: transform 0.16s ease;
 }
 
 .ui-toggle__input:checked + .ui-toggle__track {
-  background: #2f855a;
+  background: var(--ck-color-accent, #2f855a);
 }
 
 .ui-toggle__input:checked + .ui-toggle__track .ui-toggle__thumb {
@@ -131,6 +157,7 @@
 }
 
 .ui-toggle__input:focus-visible + .ui-toggle__track {
-  outline: 2px solid #486581;
+  outline: 2px solid var(--ck-color-focus, #486581);
   outline-offset: 2px;
+  box-shadow: var(--ck-shadow-focus, 0 0 0 3px rgb(72 101 129 / 0.18));
 }

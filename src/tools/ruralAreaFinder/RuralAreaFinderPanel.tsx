@@ -55,16 +55,24 @@ export function RuralAreaFinderPanel({
     setShowLoadedBuildings(nextShowLoadedBuildings);
   }
 
+  const settingsSummary = `${radiusMeters.toLocaleString()} m / ${opacityPercent}% opacity`;
+
   return (
-    <section className="workspace-section" aria-label="Rural Area Finder panel">
-      <div className="workspace-section__header">
-        <h2>Rural Area Finder</h2>
+    <div className="workspace-tool" aria-label="Rural Area Finder panel">
+      <div className="workspace-tool__header">
+        <div>
+          <h3>Rural Area Finder</h3>
+          <p>{isEnabled ? 'Avoid zones active' : 'Settings available'}</p>
+        </div>
         <Toggle checked={isEnabled} label={isEnabled ? 'Enabled' : 'Disabled'} onChange={onToggleEnabled} />
       </div>
 
       <div className="tool-shell">
         <div className="tool-shell__header">
-          <h3>Settings</h3>
+          <div>
+            <h3>Settings</h3>
+            <p>{settingsSummary}</p>
+          </div>
           <button
             className="workspace-section__toggle"
             type="button"
@@ -79,41 +87,46 @@ export function RuralAreaFinderPanel({
         </div>
 
         {areSettingsExpanded ? (
-          <>
-            <TextInput
-              label="Distance from buildings"
-              max={RURAL_AREA_FINDER_MAX_RADIUS_METERS}
-              onChange={(event) => handleRadiusChange(event.currentTarget.valueAsNumber)}
-              step={RURAL_AREA_FINDER_RADIUS_STEP_METERS}
-              type="number"
-              value={radiusMeters}
-            />
-            <p>
-              Default is {RURAL_AREA_FINDER_DEFAULT_RADIUS_METERS.toLocaleString()} m. Avoid zones use loaded building
-              data for the current map view.
-            </p>
-            <TextInput
-              label="Overlay opacity"
-              max={RURAL_AREA_FINDER_MAX_OPACITY_PERCENT}
-              min={RURAL_AREA_FINDER_MIN_OPACITY_PERCENT}
-              onChange={(event) => handleOpacityChange(event.currentTarget.valueAsNumber)}
-              step={RURAL_AREA_FINDER_OPACITY_STEP_PERCENT}
-              type="number"
-              value={opacityPercent}
-            />
-            <p>Default is {RURAL_AREA_FINDER_DEFAULT_OPACITY_PERCENT}%.</p>
-            <div className="tool-shell__header">
-              <h3>Loaded buildings</h3>
+          <div className="tool-settings">
+            <div className="tool-setting">
+              <TextInput
+                label="Distance from buildings"
+                max={RURAL_AREA_FINDER_MAX_RADIUS_METERS}
+                onChange={(event) => handleRadiusChange(event.currentTarget.valueAsNumber)}
+                step={RURAL_AREA_FINDER_RADIUS_STEP_METERS}
+                type="number"
+                value={radiusMeters}
+              />
+              <p>{RURAL_AREA_FINDER_DEFAULT_RADIUS_METERS.toLocaleString()} m default</p>
+            </div>
+
+            <div className="tool-setting">
+              <TextInput
+                label="Overlay opacity"
+                max={RURAL_AREA_FINDER_MAX_OPACITY_PERCENT}
+                min={RURAL_AREA_FINDER_MIN_OPACITY_PERCENT}
+                onChange={(event) => handleOpacityChange(event.currentTarget.valueAsNumber)}
+                step={RURAL_AREA_FINDER_OPACITY_STEP_PERCENT}
+                type="number"
+                value={opacityPercent}
+              />
+              <p>{RURAL_AREA_FINDER_DEFAULT_OPACITY_PERCENT}% default</p>
+            </div>
+
+            <div className="tool-output-setting">
+              <div>
+                <h3>Loaded buildings</h3>
+                <p>Show current building polygons when active.</p>
+              </div>
               <Toggle
                 checked={showLoadedBuildings}
                 label={showLoadedBuildings ? 'Visible' : 'Hidden'}
                 onChange={(event) => handleShowLoadedBuildingsChange(event.currentTarget.checked)}
               />
             </div>
-            <p>Shows the currently loaded building polygons while Rural Area Finder is active.</p>
-          </>
+          </div>
         ) : null}
       </div>
-    </section>
+    </div>
   );
 }

@@ -46,10 +46,14 @@ This task should not include:
 
 ## Acceptance criteria
 
-- [ ] Workspace sections are easier to scan.
-- [ ] Empty or non-useful sections are hidden or reduced.
-- [ ] Existing workflows still work.
-- [ ] App still builds.
+- [x] Workspace sections are easier to scan.
+- [x] Empty or non-useful sections are hidden or reduced.
+- [x] Existing workflows still work.
+- [x] App still builds.
+
+## Completion note
+
+Completed. Reorganized the workspace into clearer Tools, Places, and conditional Map Display sections. Rural Area Finder now reads as the primary tool inside the Tools group, the empty optional layers message is hidden when there are no layers, and the Places section carries saved-place count plus temporary pin state without changing persistence or map behavior.
 
 ## Testing instructions
 

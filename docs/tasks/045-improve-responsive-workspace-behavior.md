@@ -46,10 +46,14 @@ This task should not include:
 
 ## Acceptance criteria
 
-- [ ] Search, workspace, and status do not overlap on narrow screens.
-- [ ] Workspace remains reachable and usable.
-- [ ] Status remains readable.
-- [ ] App still builds.
+- [x] Search, workspace, and status do not overlap on narrow screens.
+- [x] Workspace remains reachable and usable.
+- [x] Status remains readable.
+- [x] App still builds.
+
+## Completion note
+
+Completed. Narrow-screen layout now reserves explicit bottom space for the status indicator, keeps search and workspace in the primary region with the workspace scrolling in the remaining space, and tightens spacing/readability at very small widths. Existing workflows and component behavior are unchanged.
 
 ## Testing instructions
 

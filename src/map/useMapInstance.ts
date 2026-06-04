@@ -14,7 +14,7 @@ import {
 } from '../dataSources';
 import type { SavedPlace, SavedPlaceCoordinates } from '../savedPlaces';
 import { createAvoidZoneMaskCanvas } from '../tools/ruralAreaFinder/ruralAreaFinderAvoidZone';
-import { createBoundsCacheKey, debounce } from '../utils';
+import { createBoundsCacheKey, debounce, setBoundedBoundsCacheEntry } from '../utils';
 import { cairnKitMapOptions } from './mapConfig';
 
 const LOADED_BUILDINGS_DEBUG_LAYER_ID = 'loaded-buildings-debug';
@@ -397,7 +397,7 @@ export function useMapInstance({
         });
 
         if (buildingLoadRequestIdRef.current === requestId && shouldLoadBuildingFeaturesRef.current) {
-          buildingFeatureCacheRef.current.set(cacheKey, features);
+          setBoundedBoundsCacheEntry(buildingFeatureCacheRef.current, cacheKey, features);
           latestBuildingBoundsRef.current = bounds;
           latestBuildingFeaturesRef.current = features;
           syncLoadedBuildingsDebugLayer(
@@ -487,7 +487,7 @@ export function useMapInstance({
         })
         .then((features) => {
           if (buildingLoadRequestIdRef.current === requestId && shouldLoadBuildingFeaturesRef.current) {
-            buildingFeatureCacheRef.current.set(cacheKey, features);
+            setBoundedBoundsCacheEntry(buildingFeatureCacheRef.current, cacheKey, features);
             latestBuildingBoundsRef.current = bounds;
             latestBuildingFeaturesRef.current = features;
             syncLoadedBuildingsDebugLayer(

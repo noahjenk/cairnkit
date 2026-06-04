@@ -23,18 +23,18 @@ export function SavedPlacesPanel({
     <div className="saved-places-list">
       {savedPlaces.map((savedPlace) => (
         <button
-          className={`saved-places-list__item ${
-            savedPlace.id === selectedSavedPlaceId ? 'saved-places-list__item--selected' : ''
+          className={`saved-place-option saved-places-list__item ${
+            savedPlace.id === selectedSavedPlaceId ? 'saved-place-option--selected' : ''
           }`.trim()}
           key={savedPlace.id}
           onClick={() => onSelectSavedPlace?.(savedPlace)}
           type="button"
         >
-          <h3>{savedPlace.name}</h3>
-          <p>
+          <span className="saved-place-option__name">{savedPlace.name}</span>
+          <span className="saved-place-option__meta">
             {formatCoordinate(savedPlace.coordinates.latitude)}, {formatCoordinate(savedPlace.coordinates.longitude)}
-          </p>
-          {savedPlace.notes ? <p>{savedPlace.notes}</p> : null}
+          </span>
+          {savedPlace.notes ? <span className="saved-place-option__notes">{savedPlace.notes}</span> : null}
         </button>
       ))}
     </div>

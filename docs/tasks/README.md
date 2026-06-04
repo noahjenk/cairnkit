@@ -22,11 +22,11 @@ Those files should only be updated when their durable guidance changes, not afte
 
 ## Current Project Status
 
-The repo has completed Tasks 001 through 038, plus inserted Tasks 8.5, 8.6, and 10.5.
+The repo has completed Tasks 001 through 047, plus inserted Tasks 8.5, 8.6, and 10.5.
 
-The current next implementation task is Task 039: `039-add-clear-selected-saved-place-action.md`.
+The proposed next implementation task is Task 048: `048-add-building-load-viewport-guard.md`.
 
-Copilot must not skip ahead to later refinement work before adding a clear selected saved-place action.
+Copilot must wait for approval before implementing Task 048.
 
 ## Update Rules
 
@@ -145,6 +145,8 @@ After those inserted tasks, regular task numbering should continue:
 044-[short-task-name].md
 045-[short-task-name].md
 046-[short-task-name].md
+047-[short-task-name].md
+048-[short-task-name].md
 ```
 
 Task numbers should never be reused.
@@ -210,14 +212,16 @@ After the initial task briefs are complete, the next expected tasks should conti
 37. Make search box useful. Done.
 38. Highlight selected saved place search result. Done.
 39. Select saved place from workspace list. Done.
-40. Add clear selected saved place action.
-41. Define UI layout system tokens.
-42. Rework map workspace layout regions.
-43. Redesign workspace information architecture.
-44. Consolidate search and saved-place selection UI.
-45. Simplify Rural Area Finder panel layout.
-46. Improve responsive workspace behavior.
-47. UI polish pass.
+40. Add clear selected saved place action. Done.
+41. Define UI layout system tokens. Done.
+42. Rework map workspace layout regions. Done.
+43. Redesign workspace information architecture. Done.
+44. Consolidate search and saved-place selection UI. Done.
+45. Simplify Rural Area Finder panel layout. Done.
+46. Improve responsive workspace behavior. Done.
+47. UI polish pass. Done.
+48. Add bounded building feature cache. Done.
+49. Add building load viewport guard. Proposed.
 
 This list is the later implementation sequence now that the initial task briefs are complete.
 
@@ -231,10 +235,10 @@ It should first produce a proposed next task brief and explain why that task is 
 
 ## Current Next Task
 
-The current next implementation task is:
+The proposed next implementation task is:
 
 ```txt
-039-add-clear-selected-saved-place-action.md
+048-add-building-load-viewport-guard.md
 ```
 
-Copilot must start with Task 039 and keep it focused on adding a clear selected saved-place action.
+Copilot must wait for approval before implementing Task 048.

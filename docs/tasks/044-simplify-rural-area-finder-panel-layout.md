@@ -45,10 +45,14 @@ This task should not include:
 
 ## Acceptance criteria
 
-- [ ] Rural Area Finder panel is easier to scan.
-- [ ] Settings and output controls remain available.
-- [ ] Behavior is unchanged.
-- [ ] App still builds.
+- [x] Rural Area Finder panel is easier to scan.
+- [x] Settings and output controls remain available.
+- [x] Behavior is unchanged.
+- [x] App still builds.
+
+## Completion note
+
+Completed. Simplified the Rural Area Finder hierarchy with an enabled-state summary, compact settings summary, grouped distance and opacity controls, and a separate loaded-buildings output row. Removed repetitive explanatory text while preserving all settings, persistence, and enable behavior.
 
 ## Testing instructions
 
