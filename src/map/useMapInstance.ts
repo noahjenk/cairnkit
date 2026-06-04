@@ -13,7 +13,10 @@ import {
   type MapFeature
 } from '../dataSources';
 import type { SavedPlace, SavedPlaceCoordinates } from '../savedPlaces';
-import { createApproximateAvoidZoneFeatures } from '../tools/ruralAreaFinder/ruralAreaFinderAvoidZone';
+import type {
+  AvoidZoneWorkerRequest,
+  AvoidZoneWorkerResponse
+} from '../tools/ruralAreaFinder/ruralAreaFinderAvoidZoneWorkerTypes';
 import { createBoundsCacheKey, debounce } from '../utils';
 import { cairnKitMapOptions } from './mapConfig';
 
@@ -78,12 +81,7 @@ function addLoadedBuildingsDebugLayer(map: Map, buildingFeatures: MapFeature[]) 
   }
 }
 
-function addRuralAreaFinderAvoidZoneLayer(
-  map: Map,
-  buildingFeatures: MapFeature[],
-  radiusMeters: number
-) {
-  const avoidZoneFeatures = createApproximateAvoidZoneFeatures(buildingFeatures, radiusMeters);
+function addRuralAreaFinderAvoidZoneLayer(map: Map, avoidZoneFeatures: MapFeature[]) {
   const avoidZoneGeoJson = mapFeaturesToGeoJson(avoidZoneFeatures);
   const existingSource = map.getSource(ruralAreaFinderAvoidZoneMapSourceId);
 
@@ -113,20 +111,6 @@ function addRuralAreaFinderAvoidZoneLayer(
       map.getLayer(loadedBuildingsDebugMapLayerId) ? loadedBuildingsDebugMapLayerId : undefined
     );
   }
-}
-
-function syncRuralAreaFinderAvoidZoneLayer(
-  map: Map,
-  buildingFeatures: MapFeature[],
-  radiusMeters: number,
-  isVisible: boolean
-) {
-  if (isVisible) {
-    addRuralAreaFinderAvoidZoneLayer(map, buildingFeatures, radiusMeters);
-    return;
-  }
-
-  removeRuralAreaFinderAvoidZoneLayer(map);
 }
 
 function syncLoadedBuildingsDebugLayer(map: Map, buildingFeatures: MapFeature[], isVisible: boolean) {
@@ -238,10 +222,79 @@ export function useMapInstance({
   const buildingFeatureCacheRef = useRef<globalThis.Map<string, MapFeature[]>>(new globalThis.Map());
   const buildingLoadRequestIdRef = useRef(0);
   const latestBuildingFeaturesRef = useRef<MapFeature[]>([]);
+  const avoidZoneRequestIdRef = useRef(0);
+  const avoidZoneWorkerRef = useRef<Worker | null>(null);
   const ruralAreaFinderRadiusMetersRef = useRef(ruralAreaFinderRadiusMeters);
   const showLoadedBuildingsDebugLayerRef = useRef(showLoadedBuildingsDebugLayer);
   const showRuralAreaFinderAvoidZoneLayerRef = useRef(showRuralAreaFinderAvoidZoneLayer);
   const savedPlaceMarkersRef = useRef<maplibregl.Marker[]>([]);
+
+  function syncRuralAreaFinderAvoidZoneLayer(
+    map: Map,
+    buildingFeatures: MapFeature[],
+    radiusMeters: number,
+    isVisible: boolean
+  ) {
+    avoidZoneRequestIdRef.current += 1;
+    const requestId = avoidZoneRequestIdRef.current;
+
+    avoidZoneWorkerRef.current?.terminate();
+    avoidZoneWorkerRef.current = null;
+
+    if (!isVisible) {
+      removeRuralAreaFinderAvoidZoneLayer(map);
+      return;
+    }
+
+    const worker = new Worker(
+      new URL('../tools/ruralAreaFinder/ruralAreaFinderAvoidZoneWorker.ts', import.meta.url),
+      { type: 'module' }
+    );
+    avoidZoneWorkerRef.current = worker;
+
+    worker.addEventListener('message', (event: MessageEvent<AvoidZoneWorkerResponse>) => {
+      if (event.data.requestId !== avoidZoneRequestIdRef.current || avoidZoneWorkerRef.current !== worker) {
+        worker.terminate();
+        return;
+      }
+
+      avoidZoneWorkerRef.current = null;
+      worker.terminate();
+
+      if (!showRuralAreaFinderAvoidZoneLayerRef.current || mapRef.current !== map) {
+        return;
+      }
+
+      if (event.data.state === 'error') {
+        console.warn('Unable to build Rural Area Finder avoid zone.', event.data.message);
+        addRuralAreaFinderAvoidZoneLayer(map, []);
+        return;
+      }
+
+      addRuralAreaFinderAvoidZoneLayer(map, event.data.features);
+    });
+
+    worker.addEventListener('error', (event) => {
+      if (avoidZoneWorkerRef.current === worker) {
+        avoidZoneWorkerRef.current = null;
+      }
+
+      worker.terminate();
+      console.warn('Rural Area Finder avoid-zone worker failed.', event.message);
+
+      if (showRuralAreaFinderAvoidZoneLayerRef.current && mapRef.current === map) {
+        addRuralAreaFinderAvoidZoneLayer(map, []);
+      }
+    });
+
+    const request: AvoidZoneWorkerRequest = {
+      buildingFeatures,
+      radiusMeters,
+      requestId
+    };
+
+    worker.postMessage(request);
+  }
 
   useEffect(() => {
     ruralAreaFinderRadiusMetersRef.current = ruralAreaFinderRadiusMeters;
@@ -263,6 +316,8 @@ export function useMapInstance({
     mapRef.current = map;
 
     return () => {
+      avoidZoneWorkerRef.current?.terminate();
+      avoidZoneWorkerRef.current = null;
       savedPlaceMarkersRef.current.forEach((marker) => marker.remove());
       savedPlaceMarkersRef.current = [];
       map.remove();

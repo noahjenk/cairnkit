@@ -142,6 +142,7 @@ React components should not randomly create MapLibre sources and layers directly
 - debounced bounds-based Overpass building loading.
 - the simple in-memory building feature cache.
 - manual refresh handling.
+- starting and cancelling Rural Area Finder avoid-zone worker jobs.
 
 This is acceptable for the MVP, but future map work should look for small opportunities to move repeated source/layer sync code behind helpers.
 
@@ -153,7 +154,7 @@ The first real tool is Rural Area Finder.
 
 Future tools should be added through the tool registry rather than by rewriting the app shell.
 
-Rural Area Finder currently has an enabled state, radius setting, persisted radius value, panel UI, and a unioned approximate avoid-zone output. Its avoid-zone visibility is controlled by the Rural Area Finder toggle and radius, not by the generic layer list.
+Rural Area Finder currently has an enabled state, radius setting, persisted radius value, panel UI, and a worker-generated unioned approximate avoid-zone output. Its avoid-zone visibility is controlled by the Rural Area Finder toggle and radius, not by the generic layer list.
 
 ## Layer system
 

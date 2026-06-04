@@ -4,8 +4,6 @@ import { buildingFeatureType } from '../../featureTypes';
 
 const METERS_PER_LATITUDE_DEGREE = 111_320;
 const AVOID_ZONE_SEGMENTS = 20;
-const MAX_AVOID_ZONE_SOURCE_FEATURES = 500;
-const MAX_UNION_GROUP_CIRCLES = 120;
 
 type AvoidZoneCircle = {
   center: {
@@ -155,20 +153,12 @@ function createUnionedPolygons(circleGroup: AvoidZoneCircle[]): MultiPolygon {
     return [];
   }
 
-  if (circleGroup.length > MAX_UNION_GROUP_CIRCLES) {
-    return [];
-  }
-
   const [firstCircle, ...remainingCircles] = circleGroup;
 
   return union(createCirclePolygon(firstCircle), ...remainingCircles.map(createCirclePolygon));
 }
 
 export function createApproximateAvoidZoneFeatures(buildingFeatures: MapFeature[], radiusMeters: number) {
-  if (buildingFeatures.length > MAX_AVOID_ZONE_SOURCE_FEATURES) {
-    return [];
-  }
-
   const circles = createAvoidZoneCircles(buildingFeatures, radiusMeters);
   const circleGroups = groupOverlappingCircles(circles);
 

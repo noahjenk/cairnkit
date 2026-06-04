@@ -96,8 +96,8 @@ Rural Area Finder uses `polygon-clipping` to union overlapping approximate avoid
 
 Reason: convex hulls did not match the intended shape. A focused polygon union dependency produces combined shaded areas that follow the overlapping circle outlines while keeping the frontend-only MVP architecture.
 
-## Decision 017: Guard expensive avoid-zone union work
+## Decision 017: Move expensive avoid-zone union work off the main thread
 
-Rural Area Finder skips avoid-zone output for very dense building sets or very large overlap groups.
+Rural Area Finder runs avoid-zone polygon union in a Web Worker.
 
-Reason: polygon union runs in the browser during the frontend-only MVP. It is better for dense areas to show no avoid-zone output temporarily than to crash the app. A later task can move heavy geometry to a worker, add progressive processing, or narrow the loaded feature set.
+Reason: polygon union runs in the browser during the frontend-only MVP. A worker lets dense areas, including villages, still produce shaded output without blocking React and MapLibre on the main UI thread.
